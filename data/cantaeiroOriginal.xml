@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<data>
+   <sensores>
+      <sensorGalvanico>200</sensorGalvanico>
+      <sensorLuz>400</sensorLuz>
+      <sensorHumidade>600</sensorHumidade>
+   </sensores>
+   <desvio>
+      <desvioGalvanico>60</desvioGalvanico>
+      <desvioLuz>70</desvioLuz>
+      <desvioHumidade>100</desvioHumidade>
+   </desvio>
+   <pistasSensorEscolhido>
+      <pista1>0</pista1>
+      <pista2>1</pista2>
+      <pista3>2</pista3>
+   </pistasSensorEscolhido>
+   <ficha>
+      <nome>Filipe</nome>
+      <altura>2,33cm</altura>
+      <cor>verde</cor>
+      <forma>elipse</forma>
+      <tamanho>5 cm</tamanho>   
+      <cientifico>Cactus</cientifico>
+   </ficha>
+   <descricao>
+      <espaco>A minha planta vive na Escola Eb 1 de Alfandega da Fé</espaco>
+   </descricao>
+   <samples>
+      <sample0>/Users/cipemojm/Desktop/2BUBBLING.mp3</sample0>
+      <sample1>1.aiff</sample1>
+      <sample2>2.aiff</sample2>
+      <sample3>3.aiff</sample3>
+      <sample4>4.aiff</sample4>
+      <sample5>5.aiff</sample5>
+      <sample6>6.aiff</sample6>
+      <sample7>7.aiff</sample7>
+      <sample8>8.aiff</sample8>
+      <sample9>9.aiff</sample9>
+      <sample10>10.aiff</sample10>
+      <sample11>11.aiff</sample11>
+   </samples>
+   <alarme>
+      <alarmePista1>19:01</alarmePista1>
+      <alarmePista2>23:00</alarmePista2>
+      <alarmePista3>00:00</alarmePista3>
+   </alarme>
+   <plantitura>
+      <sequencia>1,2,5,9,9,1</sequencia>
+   </plantitura>
+</data>

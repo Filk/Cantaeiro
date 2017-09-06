@@ -4,7 +4,7 @@ class GereSamples
   Sample meuSample;
   Gain gainObject;
   String pathSample;
-  boolean fimSample=true;
+  boolean fimSample;
   
   GereSamples (String tempFicheiroInicio)
   {

@@ -89,7 +89,7 @@ void setup()
 
   for (int i=0; i<numeroSamples; i++)
   {
-    tocaSamples[i]=new GereSamples (i+".aiff");
+    tocaSamples[i]=new GereSamples (i+".wav");
   }
 
   int yInicioSliders=25;
@@ -143,8 +143,6 @@ void setup()
   ac.start();
 }
 
-
-
 void draw()
 {
   image(fundo, 0, 0);
@@ -163,12 +161,17 @@ void draw()
     alarme[k].gui();
     ps[k].tocaSamplesQuandoThreshold(k);
   }
-
+  
+  //if (!tocaSamples[0].fimSample)
+  //{
+  //  println("asdasd");
+  //}
+  
   for (int j=0; j<numeroSamples; j++)
   {
     reiniciaSamples(j);
   }
-
+  
   plantitura.transportPlantitura();
 
   horasSegundos();

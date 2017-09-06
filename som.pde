@@ -4,28 +4,40 @@ class GereSamples
   Sample meuSample;
   Gain gainObject;
   String pathSample;
-  boolean fimSample;
+  double duracaoFile;
+  boolean sampleChegouFim;
   
   GereSamples (String tempFicheiroInicio)
   {
     pathSample=tempFicheiroInicio;
     meuSample= SampleManager.sample(dataPath(pathSample));
     player = new SamplePlayer(ac,meuSample);
-    gainObject = new Gain(ac,2,0.9);
+    gainObject = new Gain(ac,2,0.5);
     gainObject.addInput(player);
     ac.out.addInput(gainObject);
     player.setSample(meuSample);
     player.setKillOnEnd(false);
+    duracaoFile=meuSample.getLength();
+    sampleChegouFim=false;
     player.reTrigger();
-    player.setEndListener(new Bead()
-    {
-      public void messageReceived(Bead mess)
-      {
-        fimSample=true;
-      }
-    }
-    );
   }
+  
+  boolean assinalaFimSample()
+  {    
+    if(!player.isPaused())
+    {
+      if(player.getPosition()>duracaoFile)
+      {
+        sampleChegouFim= true;
+      }
+      else
+      {
+        sampleChegouFim= false;
+      }
+    } 
+    return sampleChegouFim;
+  }
+  
 }
 
 class PistaSamples
@@ -102,7 +114,7 @@ class PistaSamples
          for (int i=0; i<numeroSlides; i++)
          {
             i=i+(4*numeroPistas);
-            if(tocaSamples[i].fimSample)
+            if(tocaSamples[i].assinalaFimSample())
             {
              int randomSom=(int) random(4);
              tocaSamples[randomSom+inicioQualSample].player.reset();
@@ -116,5 +128,4 @@ class PistaSamples
        }
      }
    }
-  
 }

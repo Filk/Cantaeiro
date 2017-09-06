@@ -162,15 +162,7 @@ void draw()
     ps[k].tocaSamplesQuandoThreshold(k);
   }
   
-  //if (!tocaSamples[0].fimSample)
-  //{
-  //  println("asdasd");
-  //}
-  
-  for (int j=0; j<numeroSamples; j++)
-  {
-    reiniciaSamples(j);
-  }
+  //tocaSamples[0].assinalaFimSample();
   
   plantitura.transportPlantitura();
 
@@ -221,13 +213,5 @@ void horasSegundos()
     {
       somAlarmeTocou[i]=false;
     }
-  }
-}
-
-void reiniciaSamples(int index)
-{
-  if (tocaSamples[index].fimSample)
-  {
-    tocaSamples[index].fimSample=false;
   }
 }

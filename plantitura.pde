@@ -78,7 +78,7 @@ class Plantitura
         println("disparou");
       }
       
-      if(tocaSamples[setSequencia[currentPlayingIndex]].fimSample)
+      if(tocaSamples[setSequencia[currentPlayingIndex]].assinalaFimSample())
       {
         println("finalsample" + setSequencia[currentPlayingIndex]);
         currentPlayingIndex=currentPlayingIndex+1;

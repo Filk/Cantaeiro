@@ -1,6 +1,5 @@
 class LoadInfo
 { 
-  
   LoadInfo()
   {
 
@@ -200,54 +199,3 @@ void fileSelectedAbrir(File selection)
     plantitura.plantituraSeq.setValue(plantituraSeq.getContent());
   }
 }
-
-
-
-
-
-
-  void teste()
-  {
-    if (keyPressed && key=='b')
-    {
-      //for (int i=0; i<numeroPistas; i++)
-      //{
-      //  println("pista" + " " + i+ " " + "qual sensor" + " " +ps[i].sl.getValue());
-      //}
-      //for (int i=0; i<numeroSlides; i++)
-      //{
-      //  println("sensor" + " " + i+ " " + "qual valor" + " " + sliderThresholdEscolhido[i].valorThresholdMapeado);
-      //}
-      //println(ficha.numeroDescritores);
-      //for (int i=0; i<(ficha.numeroDescritores); i++)
-      //{
-      //  if(i<ficha.numeroDescritores-1)
-      //  {
-      //    if(ficha.entrada[i].getText()!=null)
-      //    {
-      //      println(ficha.entrada[i].getText());
-      //    }
-      //  }
-      //  if(i==6)
-      //  {
-      //    println(ficha.adicionalComentarios.getText());
-      //  }
-      //}
-      //for (int i=0; i<numeroSamples; i++)
-      //{
-      //   println(tocaSamples[i].meuSample.getFileName()); 
-      //}
-      
-      //for (int i=0; i<numeroPistas; i++)
-      //{
-      //  if(alarme[i].caixaTemporizador.getText()!=null)
-      //  {
-      //    println(i+ " " + alarme[i].caixaTemporizador.getText());
-      //  }
-      //  else
-      //  {
-      //    println(i+ " " + "Nada");
-      //  }
-      //}
-    }
-  }

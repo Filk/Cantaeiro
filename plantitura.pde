@@ -53,32 +53,32 @@ class Plantitura
     { 
       if (segue)
       {
-        int i=setSequencia[currentPlayingIndex];
+        //-1 is to compensate audiofiles start with "0.wav"
+        int i=setSequencia[currentPlayingIndex]-1;
+        //println(currentPlayingIndex + " " + i);
         tocaSamples[i].player.reset();
         tocaSamples[i].player.reTrigger();
         
-         if (i<4)
+         if (i<5)
          {
            p=0;
          }
-         else if (i>=4&&i<8)
+         else if (i>=5&&i<9)
          {
            p=1;
          }
-         else if (i>=8&&i<12)
+         else if (i>=9&&i<13)
          {
            p=2;
          }
         //sample box 
         fill(10,200,10);
-        //rect(ps[p].x,ps[p].y+ps[p].alturaOpen+((p*ps[p].espacamentoEntreBlocos)+ps[p].alturaOpen), ps[p].comprimentoBloco, ps[p].alturaBloco);
         rect(ps[p%3].x,ps[p%3].y+ps[p%3].alturaOpen+((p%3*ps[p%3].espacamentoEntreBlocos)+ps[p%3].alturaOpen), ps[p%3].comprimentoBloco, ps[p%3].alturaBloco);
-        
         segue=false;
-        println("disparou");
       }
       
-      if(tocaSamples[setSequencia[currentPlayingIndex]].assinalaFimSample())
+      //-1 is to compensate audiofiles start with "0.wav"
+      if(tocaSamples[setSequencia[currentPlayingIndex]-1].assinalaFimSample())
       {
         println("finalsample" + setSequencia[currentPlayingIndex]);
         currentPlayingIndex=currentPlayingIndex+1;
@@ -135,27 +135,3 @@ public void plantitura (String plantituraSeq)
     plantituraPronta=false;
   }
 }
-
-/*
-         else if (i==0)
-         {
-           tocaSamples[sampleActual].player.reset();
-           tocaSamples[sampleActual].player.reTrigger();
-           if (sampleActual<4)
-           {
-             pista=0;
-           }
-           else if (sampleActual>=4&&sampleActual<8)
-           {
-             pista=1;
-           }
-           else if (sampleActual>=8&&sampleActual<12)
-           {
-             pista=2;
-           }
-           //sample box 
-           fill(10,200,10);
-           //println(ps[pista].x,ps[pista].y);
-           rect(ps[pista].x,ps[pista].y+ps[pista].alturaOpen+((pista*ps[pista].espacamentoEntreBlocos)+ps[pista].alturaOpen), ps[pista].comprimentoBloco, ps[pista].alturaBloco);
-         }
-*/

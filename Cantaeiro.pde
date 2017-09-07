@@ -27,7 +27,7 @@ MeuNumberMedicao [] valorMedido = new MeuNumberMedicao[numeroSlides];
 AssinalaThreshold [] thresholdBox = new AssinalaThreshold [numeroSlides];
 MeuSliderEscolheThreshold [] sliderThreshold = new MeuSliderEscolheThreshold[numeroSlides];
 
-PImage fundo, play, stop;
+PImage fundo, play, stop, bonsai;
 
 //scrolabble list of sensors
 List listaSensores = Arrays.asList("Pausa", "condutividade", "luminosidade", "humidade");
@@ -83,6 +83,7 @@ void setup()
   fundo= loadImage("layout_1.jpg");
   play= loadImage("play.png");
   stop= loadImage("stop.png");
+  bonsai= loadImage("bonsai.png");
 
   ac = new AudioContext();
   cp5 = new ControlP5(this);
@@ -162,11 +163,11 @@ void draw()
     ps[k].tocaSamplesQuandoThreshold(k);
   }
   
-  //tocaSamples[0].assinalaFimSample();
-  
   plantitura.transportPlantitura();
 
   horasSegundos();
+  
+  image(bonsai,667,26);
 }
 
 void mousePressed()

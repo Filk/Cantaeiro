@@ -103,7 +103,6 @@ void sabeQueEstaNaZona(int xTemp, int yTemp)
   {
     areaSelecionada=false;
     ratoClicado=false;
-    println("asda");
   }
   if (areaSelecionada)
   {

@@ -22,7 +22,7 @@ class Plantitura
   
   void transportPlantitura()
   {
-    if (ratoClicado && mouseX>=605 && mouseX <=635 && mouseY>=590 && mouseY <=620)
+    if (ratoClicado && mouseX>=605 && mouseX <=635 && mouseY>=590 && mouseY <=620 && plantituraPronta)
     {
       playStop=!playStop;
       ratoClicado=false;
@@ -80,7 +80,7 @@ class Plantitura
       //-1 is to compensate audiofiles start with "0.wav"
       if(tocaSamples[setSequencia[currentPlayingIndex]-1].assinalaFimSample())
       {
-        println("finalsample" + setSequencia[currentPlayingIndex]);
+        //println("finalsample" + setSequencia[currentPlayingIndex]);
         currentPlayingIndex=currentPlayingIndex+1;
         //checks to see if plays next
         if (setSequencia.length>currentPlayingIndex)
@@ -90,6 +90,7 @@ class Plantitura
         else
         {
           playStop=false;
+          plantituraPronta=false;
         }
       }
     }

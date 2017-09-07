@@ -19,7 +19,7 @@ class GereSamples
     player.setKillOnEnd(false);
     duracaoFile=meuSample.getLength();
     sampleChegouFim=false;
-    player.reTrigger();
+    player.setToEnd();
   }
   
   boolean assinalaFimSample()

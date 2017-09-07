@@ -61,7 +61,6 @@ public int valor_1;
 public int valor_2;
 
 XML infoToLoadXML, infoToSaveXML;
-LoadInfo infoToLoad;
 loadSaveXML lsXML;
 boolean alarmeXML0;
 boolean alarmeXML1;
@@ -80,7 +79,7 @@ void setup()
   fonteP5= new ControlFont(fonte, 10);
 
   textFont(fonte);
-  fundo= loadImage("layout_1.jpg");
+  fundo= loadImage("layout.jpg");
   play= loadImage("play.png");
   stop= loadImage("stop.png");
   bonsai= loadImage("bonsai.png");
@@ -124,8 +123,6 @@ void setup()
 
   plantitura= new Plantitura(15, 590, 580, 30);
 
-  //infoToLoadXML = loadXML("cantaeiroOriginal.xml");
-  infoToLoad= new LoadInfo();
   lsXML= new loadSaveXML(120, 660, 60, 30);
 
   makey[0]='w';

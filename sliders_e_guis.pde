@@ -11,7 +11,7 @@ class MeuSliderEscolheThreshold
        .setSize(200,33)
        .setHandleSize(10)
        .setRange(0,1023)
-       .setRangeValues(200,300)
+       .setRangeValues(300,400)
        // after the initialization we turn broadcast back on again
        .setBroadcast(true)
        .setColorForeground(color(0,21,100))

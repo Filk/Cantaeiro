@@ -1,15 +1,13 @@
 <?xml version="1.0"?>
 <data>
    <sensores>
-      <sensorGalvanico>200</sensorGalvanico>
-      <sensorLuz>400</sensorLuz>
-      <sensorHumidade>600</sensorHumidade>
+      <sensorGalvanicoHigh>900</sensorGalvanicoHigh>
+      <sensorGalvanicoLow>200</sensorGalvanicoLow>
+      <sensorLuzHigh>200</sensorLuzHigh>
+      <sensorLuzLow>400</sensorLuzLow>
+      <sensorHumidadeHigh>900</sensorHumidadeHigh>
+      <sensorHumidadeLow>1000</sensorHumidadeLow>
    </sensores>
-   <desvio>
-      <desvioGalvanico>60</desvioGalvanico>
-      <desvioLuz>70</desvioLuz>
-      <desvioHumidade>100</desvioHumidade>
-   </desvio>
    <pistasSensorEscolhido>
       <pista1>0</pista1>
       <pista2>1</pista2>
@@ -27,18 +25,18 @@
       <espaco>A minha planta vive na Escola Eb 1 de Alfandega da Fé</espaco>
    </descricao>
    <samples>
-      <sample0>data/0.wav</sample0>
-      <sample1>data/1.wav</sample1>
-      <sample2>data/2.wav</sample2>
-      <sample3>data/3.wav</sample3>
-      <sample4>data/4.wav</sample4>
-      <sample5>data/5.wav</sample5>
-      <sample6>data/6.wav</sample6>
-      <sample7>data/7.wav</sample7>
-      <sample8>data/8.wav</sample8>
-      <sample9>data/9.wav</sample9>
-      <sample10>data/10.wav</sample10>
-      <sample11>data/11.wav</sample11>
+      <sample0>0.wav</sample0>
+      <sample1>1.wav</sample1>
+      <sample2>2.wav</sample2>
+      <sample3>3.wav</sample3>
+      <sample4>4.wav</sample4>
+      <sample5>5.wav</sample5>
+      <sample6>6.wav</sample6>
+      <sample7>7.wav</sample7>
+      <sample8>8.wav</sample8>
+      <sample9>9.wav</sample9>
+      <sample10>10.wav</sample10>
+      <sample11>11.wav</sample11>
    </samples>
    <alarme>
       <alarmePista1>19:01</alarmePista1>
@@ -49,6 +47,6 @@
       <sequencia>1,2,5,9,9,1</sequencia>
    </plantitura>
    <fotografiaPlanta>
-      <caminhoPlanta>/Users/Filk/Desktop/Code/Cantaeiro/data/xomo.png</caminhoPlanta>
+      <caminhoPlanta>data/bonsai.png</caminhoPlanta>
    </fotografiaPlanta>
 </data>

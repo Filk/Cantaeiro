@@ -92,8 +92,8 @@ class PistaSamples
       fill(100,100,100);
       rect(x,y+alturaOpen+((i*espacamentoEntreBlocos)+alturaOpen), comprimentoBloco, alturaBloco);
       
-      //checks if mouse is inside sample box
-      if (tempA>=x && tempA<(x+comprimentoBloco) && tempB>=y+alturaOpen+(i*espacamentoEntreBlocos) && tempB<(y+alturaBloco+alturaOpen+(i*espacamentoEntreBlocos)) && !sl.isOpen() && ratoClicado || keyPressed && key==makey[i+4*indexPista])
+      //checks if mouse is inside sample box and Makey-Makey
+      if (tempA>=x && tempA<(x+comprimentoBloco) && tempB>=y+alturaOpen+(i*espacamentoEntreBlocos)+20 && tempB<(y+alturaBloco+alturaOpen+(i*espacamentoEntreBlocos)+20) && !sl.isOpen() && ratoClicado || keyPressed && key==makey[i+4*indexPista])
       {
          tocaSamples[i+inicioQualSample].player.reTrigger();
          //sample box 
@@ -128,4 +128,45 @@ class PistaSamples
        }
      }
    }
+}
+
+class NovosSons
+{
+  Bang novoSom;
+
+  NovosSons (int xTemp, int yTemp, int comprimentoTemp, int alturaTemp, int index)
+  {
+    novoSom= cp5.addBang("novoSom"+index)
+      .setPosition(xTemp, yTemp)
+      .setSize(comprimentoTemp, alturaTemp)
+      .setFont(fonte)
+      .setLabel("novo som")
+      ;
+
+    cp5.getController("novoSom"+index).getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+    cp5.getController("novoSom"+index).getCaptionLabel().setFont(fonteP5).setSize(8);
+  }
+}
+
+//plant picture load, trigger by the ControlP5 event
+void loadNovoSom (File selection) 
+{  
+  if (selection == null) 
+  {
+    
+  } 
+  else
+  {
+    try
+    {
+    SampleManager.removeSample(tocaSamples[indexNovoSom].meuSample);
+    tocaSamples[indexNovoSom].meuSample=SampleManager.sample(selection.getAbsolutePath());
+    tocaSamples[indexNovoSom].player.setSample(tocaSamples[indexNovoSom].meuSample);
+    tocaSamples[indexNovoSom].player.setToEnd();
+    }
+    catch(java.lang.NullPointerException exception)
+    {
+      JOptionPane.showMessageDialog(frame, "p.f. escolher ficheiro de som!");
+    }
+  }
 }

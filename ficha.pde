@@ -5,8 +5,8 @@ class FichaDescritiva
   Textarea adicionalComentarios;
   StringList descritores = new StringList();
   String infoEspaco;
-  
-  FichaDescritiva (int xTemp, int yTemp,int comprimentoXTemp, int alturaYTemp)
+
+  FichaDescritiva (int xTemp, int yTemp, int comprimentoXTemp, int alturaYTemp)
   {
     descritores.append("Nome de baptismo");
     descritores.append("Altura");
@@ -16,53 +16,62 @@ class FichaDescritiva
     descritores.append("Nome Científico da Planta");
     descritores.append("Descrição do espaço onde a planta vive");
 
-     
+
     for (int i=0; i<numeroDescritores; i++)
     {
-      if(i<3)
+      if (i<3)
       {
         entrada[i]= cp5.addTextfield(descritores.get(i))
-        .setPosition(xTemp+130,yTemp+(55*i))
-        .setSize(comprimentoXTemp-130,20)
-        .setFont(fonte)
-        .setFocus(false)
-        .setAutoClear(false)
-        ;
+          .setPosition(xTemp+130, yTemp+(55*i))
+          .setSize(comprimentoXTemp-130, 20)
+          .setFont(fonte)
+          .setFocus(false)
+          .setAutoClear(false)
+          ;
         cp5.getController(descritores.get(i)).getCaptionLabel().setFont(fonteP5).setSize(11).setColor(0);
       }
-      if(i>=3 && i<6)
+      if (i>=3 && i<6)
       {
         entrada[i]= cp5.addTextfield(descritores.get(i))
-        .setPosition(xTemp,yTemp+(55*i))
-        .setSize(comprimentoXTemp,20)
-        .setFont(fonte)
-        .setFocus(false)
-        .setAutoClear(false)
-        ;
+          .setPosition(xTemp, yTemp+(55*i))
+          .setSize(comprimentoXTemp, 20)
+          .setFont(fonte)
+          .setFocus(false)
+          .setAutoClear(false)
+          ;
         cp5.getController(descritores.get(i)).getCaptionLabel().setFont(fonteP5).setSize(12).setColor(0);
       }
-      if(i==6)
+      if (i==6)
       {
         adicionalComentarios=cp5.addTextarea("espaco"+i)
-        .setPosition(xTemp,yTemp+(55*i))
-        .setLineHeight(14)
-        .setColorForeground(color(100,200))
-        .setSize(comprimentoXTemp,alturaYTemp)
-        .setFont(fonte)
-        .setColor(color(0))
-        .setColorBackground(color(233,100))
-        ;
+          .setPosition(xTemp, yTemp+(55*i))
+          .setLineHeight(14)
+          .setColorForeground(color(100, 200))
+          .setSize(comprimentoXTemp, alturaYTemp)
+          .setFont(fonte)
+          .setColor(color(0))
+          .setColorBackground(color(233, 100))
+          ;
         adicionalComentarios.setText(descritores.get(i));
         infoEspaco=descritores.get(i);
       }
     }
- 
   }
 }
 
 void keyPressed()
 {
-  if(areaSelecionada)
+  if (key=='f')
+  {
+    //alarme[0].caixaTemporizador.setValue("11:33");
+    //cp5.getController("alarme0").setUpdate(true);
+    //alarmeXML[0]=true;
+    //somAlarmeTocou[0]=false;
+    //cp5.getController("alarme0").setBroadcast(true);
+    //cp5.getController("alarme0").setStringValue("11:33");
+    //alarme[0].caixaTemporizador.submit();
+  }
+  if (areaSelecionada)
   {    
     if (keyCode==BACKSPACE && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
     {
@@ -70,30 +79,27 @@ void keyPressed()
       {
         ficha.infoEspaco = ficha.infoEspaco.substring(0, ficha.infoEspaco.length()-1);
       }
-    }
-    else if (keyCode == DELETE && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
+    } else if (keyCode == DELETE && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
     {
       ficha.infoEspaco = "";
-    }
-    else if (keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
+    } else if (keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
     {
       ficha.infoEspaco= ficha.infoEspaco+key;
-    }
-    else if (keyCode==131)
+    } else if (keyCode==131)
     {
       if (keyCode==65)
       {
         ficha.infoEspaco= ficha.infoEspaco+"ã";
       }
     }
-    
+
     ficha.adicionalComentarios.setText(ficha.infoEspaco);
   }
 }
 
 void sabeQueEstaNaZona(int xTemp, int yTemp)
 {  
-  if(xTemp>=xStartPosFicha && xTemp<xStartPosFicha+comprimentoFicha && yTemp>=yStartPosFicha+(55*6) && yTemp<yStartPosFicha+(55*6)+alturaFicha && ratoClicado)
+  if (xTemp>=xStartPosFicha && xTemp<xStartPosFicha+comprimentoFicha && yTemp>=yStartPosFicha+(55*6) && yTemp<yStartPosFicha+(55*6)+alturaFicha && ratoClicado)
   {
     ficha.adicionalComentarios.setText(ficha.infoEspaco);
     areaSelecionada=!areaSelecionada;
@@ -106,12 +112,12 @@ void sabeQueEstaNaZona(int xTemp, int yTemp)
   }
   if (areaSelecionada)
   {
-    stroke(0,200,10);
+    stroke(0, 200, 10);
     strokeWeight(1);
-    line(xStartPosFicha,yStartPosFicha+(55*6),xStartPosFicha+comprimentoFicha,yStartPosFicha+(55*6));
-    line(xStartPosFicha,yStartPosFicha+(55*6),xStartPosFicha,yStartPosFicha+(55*6)+alturaFicha);
-    line(xStartPosFicha,yStartPosFicha+(55*6)+alturaFicha,xStartPosFicha+comprimentoFicha,yStartPosFicha+(55*6)+alturaFicha);
-    line(xStartPosFicha+comprimentoFicha,yStartPosFicha+(55*6)+alturaFicha,xStartPosFicha+comprimentoFicha,yStartPosFicha+(55*6));
+    line(xStartPosFicha, yStartPosFicha+(55*6), xStartPosFicha+comprimentoFicha, yStartPosFicha+(55*6));
+    line(xStartPosFicha, yStartPosFicha+(55*6), xStartPosFicha, yStartPosFicha+(55*6)+alturaFicha);
+    line(xStartPosFicha, yStartPosFicha+(55*6)+alturaFicha, xStartPosFicha+comprimentoFicha, yStartPosFicha+(55*6)+alturaFicha);
+    line(xStartPosFicha+comprimentoFicha, yStartPosFicha+(55*6)+alturaFicha, xStartPosFicha+comprimentoFicha, yStartPosFicha+(55*6));
     noStroke();
   }
 }

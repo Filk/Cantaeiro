@@ -12,6 +12,7 @@ class MeuSliderEscolheThreshold
        .setHandleSize(10)
        .setRange(0,1023)
        .setRangeValues(300,400)
+       .setDecimalPrecision(0)
        // after the initialization we turn broadcast back on again
        .setBroadcast(true)
        .setColorForeground(color(0,21,100))
@@ -36,6 +37,7 @@ class MeuNumberMedicao
      .setRange(0,1023)
      .setMultiplier(1) // set the sensitifity of the numberbox
      .setValue((int) random(0,1023))
+     .setDecimalPrecision (0)
      .setLock(true)
      ;
      
@@ -93,7 +95,7 @@ class TocadorAutomatico
       .setFont(fonte)
       .setFocus(false)
       .setId(indexTemp)
-      .setAutoClear(false) 
+      .setAutoClear(false)
       ;
       
     cp5.getController("alarme"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(12).setText("alarme");
@@ -105,144 +107,4 @@ class TocadorAutomatico
     fill(40,20,20);
     rect(x+(comp*0.49),y+(alt*0.5),comp*0.5,alt*0.5);
   }
-}
-
-public void alarme0 (String horaMarcadaTemp)
-{
-  String horaMarcada;
-  int indexAlarme=0;
-  
-  if(horaMarcadaTemp.matches("\\d{2}:\\d{2}"))
-  {
-    try
-    {
-        horaMarcada=horaMarcadaTemp;
-        String [] setAlarme = split (horaMarcada, ":");
-        horaDefinida[indexAlarme]=parseInt(setAlarme[0]);
-        minutoDefinido[indexAlarme]=parseInt(setAlarme[1]);
-        if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && !alarmeXML0)
-        {
-          somAlarmeTocou[indexAlarme]=false;
-          JOptionPane.showMessageDialog(frame, "Alarme Pronto!");
-        }
-        else if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && alarmeXML0)
-        {
-          somAlarmeTocou[indexAlarme]=false;
-          alarmeXML0=false;
-        }
-        else
-        {
-          JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme. \n"+"hora(0-23):minutos(0-59)");
-        }
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-      JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme. \n"+"hora(0-23):minutos(0-59)"); 
-    }
-  }
-  else
-  {
-    JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme. \n"+"hora(0-23):minutos(0-59)");
-  }
-}
-
-public void alarme1 (String horaMarcadaTemp)
-{
-  String horaMarcada=horaMarcadaTemp;
-  int indexAlarme=1;
-  
-  if(horaMarcada.matches("\\d{2}:\\d{2}"))
-  {
-    try
-    {
-        String [] setAlarme = split (horaMarcada, ":");
-        horaDefinida[indexAlarme]=parseInt(setAlarme[0]);
-        minutoDefinido[indexAlarme]=parseInt(setAlarme[1]);
-        if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && !alarmeXML1)
-        {
-          somAlarmeTocou[indexAlarme]=false;
-          JOptionPane.showMessageDialog(frame, "Alarme Pronto!");
-        }
-        else if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && alarmeXML1)
-        {
-          somAlarmeTocou[indexAlarme]=false;
-          alarmeXML1=false;
-          println("asd");
-        }
-        else
-        {
-          JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme1. \n"+"hora(0-23):minutos(0-59)");
-        }
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-      JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme. \n"+"hora(0-23):minutos(0-59)"); 
-    }
-  }
-  else
-  {
-    JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme. \n"+"hora(0-23):minutos(0-59)");
-  }
-}
-
-public void alarme2 (String horaMarcadaTemp)
-{
-  String horaMarcada=horaMarcadaTemp;
-  int indexAlarme=2;
-  
-  if(horaMarcada.matches("\\d{2}:\\d{2}"))
-  {
-    try
-    {
-        String [] setAlarme = split (horaMarcada, ":");
-        horaDefinida[indexAlarme]=parseInt(setAlarme[0]);
-        minutoDefinido[indexAlarme]=parseInt(setAlarme[1]);
-        if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && !alarmeXML2)
-        {
-          somAlarmeTocou[indexAlarme]=false;
-          JOptionPane.showMessageDialog(frame, "Alarme Pronto!");
-        }
-        else if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && alarmeXML2)
-        {
-          somAlarmeTocou[indexAlarme]=false;
-          alarmeXML2=false;
-        }
-        else
-        {
-          JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme2. \n"+"hora(0-23):minutos(0-59)");
-        }
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-      JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme22. \n"+"hora(0-23):minutos(0-59)"); 
-    }
-  }
-  else
-  {
-    JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme222. \n"+"hora(0-23):minutos(0-59)");
-  }
-}
-
-
-void rangeController0 (int integer)
-{
-}
-void rangeController1 (int integer)
-{
-}
-void rangeController2 (int integer)
-{
-}
-
-void numberboxValue0 (int integer)
-{
-}
-void numberboxValue1 (int integer)
-{
-}
-void numberboxValue2 (int integer)
-{
 }

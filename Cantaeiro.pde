@@ -62,13 +62,17 @@ public int valor_2;
 
 XML infoToLoadXML, infoToSaveXML;
 loadSaveXML lsXML;
-boolean alarmeXML0;
-boolean alarmeXML1;
-boolean alarmeXML2;
+boolean [] alarmeXML = new boolean [alarme.length];
 
 Plantitura plantitura;
 int [] setSequencia = new int[0];
 boolean plantituraPronta=false;
+PImage bonsaiEscolhido;
+String plantituraToSave;
+boolean assinalaXML=false;
+
+NovosSons [] nSons = new NovosSons [numeroSamples];
+int indexNovoSom;
 
 void setup()
 {
@@ -113,6 +117,7 @@ void setup()
     horaDefinida[k]=99;
     minutoDefinido[k]=99;
     somAlarmeTocou[k]=true;
+    alarmeXML[k]=false;
   }
 
   //xStartPos, yStartPos,comprimento, altura
@@ -137,7 +142,23 @@ void setup()
   makey[9]='l';
   makey[10]='o';
   makey[11]='p';
-
+  
+  for (int l=0; l<nSons.length; l++)
+  {
+    if(l<4)
+    {
+    nSons[l]= new NovosSons (155,189+(l*ps[0].espacamentoEntreBlocos),60,20,l);
+    }
+    if(l>=4&&l<8)
+    {
+    nSons[l]= new NovosSons (368,189+((l-4)*ps[0].espacamentoEntreBlocos),60,20,l);
+    }
+    if(l>=8&&l<12)
+    {
+    nSons[l]= new NovosSons (577,189+((l-8)*ps[0].espacamentoEntreBlocos),60,20,l);
+    }
+  }
+  
   ac.start();
 }
 
@@ -164,6 +185,7 @@ void draw()
 
   horasSegundos();
   
+  //plant picture
   image(bonsai,667,26);
 }
 
@@ -201,7 +223,7 @@ void horasSegundos()
 
   for (int i=0; i<numeroPistas; i++)
   {
-    if (horas==horaDefinida[i]&&minutos==minutoDefinido[i] && !somAlarmeTocou[i])
+    if (horas==horaDefinida[i]&& minutos==minutoDefinido[i] && !somAlarmeTocou[i])
     {
       tocaSamples[i*4].player.reTrigger();
       ratoClicado=false;
@@ -212,4 +234,145 @@ void horasSegundos()
       somAlarmeTocou[i]=false;
     }
   }
+}
+
+//handles all ControlP5 events
+public void controlEvent(ControlEvent theEvent) 
+{
+  //replace sounds
+  for (int i=0;i<numeroSamples;i++) 
+  {
+    if (theEvent.getController().getName().equals("novoSom"+i)) 
+    {
+      indexNovoSom=i;
+      selectInput("Escolhe novo som:", "loadNovoSom");
+    }
+  }
+  
+  //update sliders
+  for (int j=0;j<numeroSlides;j++) 
+  {
+    if (theEvent.getController().getName().equals("rangeController"+j)) 
+    {
+      //println("range controller"+j);
+    }
+    if (theEvent.getController().getName().equals("numberboxValue"+j)) 
+    {
+      //println("number box"+j);
+    }
+  }
+  
+  //save Cantaeiro
+  if (theEvent.getController().getName().equals("guardar")) 
+  {
+    selectOutput("Guardar o ficheiro Cant(a)eiro:", "fileSelectedGuardar");
+  }
+  
+  //load Cantaeiro
+  if (theEvent.getController().getName().equals("abrir")) 
+  {
+    selectInput("Escolhe o ficheiro Cant(a)eiro:", "fileSelectedAbrir");
+  }
+
+  //loads plant photo
+  if (theEvent.getController().getName().equals("imagem")) 
+  {
+    selectInput("Escolhe fotografia da planta", "fileSelectedFotografia");
+  }  
+
+  //loads alarm info
+  if (theEvent.isAssignableFrom(Textfield.class))
+  {    
+    //update alarm
+    for (int k=0;k<alarme.length;k++) 
+    {
+      if (theEvent.getName().equals(("alarme")+k)) 
+      {
+        String horaMarcada=theEvent.getStringValue();
+        int indexAlarme=k;
+        
+        if(horaMarcada.matches("\\d{2}:\\d{2}"))
+        {
+          try
+          {
+              String [] setAlarme = split (horaMarcada, ":");
+              horaDefinida[indexAlarme]=parseInt(setAlarme[0]);
+              minutoDefinido[indexAlarme]=parseInt(setAlarme[1]);
+              //user input
+              if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && !alarmeXML[k])
+              {
+                somAlarmeTocou[indexAlarme]=false;
+                JOptionPane.showMessageDialog(frame, "Alarme Pronto!");
+              }
+              //loaded from XML file
+              else if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && alarmeXML[k])
+              {
+                somAlarmeTocou[indexAlarme]=false;
+                alarmeXML[k]=false;
+              }
+              else
+              {
+                JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme2. \n"+"hora(0-23):minutos(0-59)");
+              }
+          }
+          catch(Exception e)
+          {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme22. \n"+"hora(0-23):minutos(0-59)"); 
+          }
+        }
+        else
+        {
+          JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme222. \n"+"hora(0-23):minutos(0-59)");
+        }
+     }
+   }
+   
+    //plantitura stuff
+    if (theEvent.getName().equals("plantitura")) 
+    {
+      String [] getSequencia = split (theEvent.getStringValue(), ",");
+      boolean assinalaPlantituraPronta=true;
+      plantituraPronta=false;
+      
+      if (getSequencia.length>0)
+      {
+        int [] sequenciaInt = new int [getSequencia.length];
+        plantituraToSave=theEvent.getStringValue();
+        
+        outerloop:
+        for (int i=0; i<getSequencia.length;i++)
+        {
+          sequenciaInt[i]=parseInt(getSequencia[i]);
+            
+            if (sequenciaInt[i]==1 ||sequenciaInt[i]==2 ||sequenciaInt[i]==3 ||sequenciaInt[i]==4 ||sequenciaInt[i]==5 ||sequenciaInt[i]==6 ||sequenciaInt[i]==7 ||sequenciaInt[i]==8 ||sequenciaInt[i]==9 ||sequenciaInt[i]==10 ||sequenciaInt[i]==11 ||sequenciaInt[i]==12)
+            {
+              sequenciaInt[i]=sequenciaInt[i];
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(frame, "Ups! Definições plantitura erradas. \n"+" \n"+"Introduzir números entre 1 e 12. \n"+ "ex: 1,4,2,12,9 \n"+ "(terminar sem vírgula)");
+              assinalaPlantituraPronta=false;
+              break outerloop;
+            }
+        }
+        if(assinalaPlantituraPronta)
+        {
+          if(!assinalaXML)
+          {
+            JOptionPane.showMessageDialog(frame, "Plantitura pronta!");
+          }
+          plantituraPronta=true;
+          setSequencia=sequenciaInt;
+        }
+      }
+      else
+      {
+        plantituraPronta=false;
+      }
+      assinalaXML=false;
+   }
+  }
+ 
+
 }

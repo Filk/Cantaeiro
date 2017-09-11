@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <data>
    <sensores>
-      <sensorGalvanicoHigh>900</sensorGalvanicoHigh>
+      <sensorGalvanicoHigh>300</sensorGalvanicoHigh>
       <sensorGalvanicoLow>200</sensorGalvanicoLow>
       <sensorLuzHigh>200</sensorLuzHigh>
       <sensorLuzLow>400</sensorLuzLow>
@@ -39,8 +39,8 @@
       <sample11>11.wav</sample11>
    </samples>
    <alarme>
-      <alarmePista1>19:01</alarmePista1>
-      <alarmePista2>23:00</alarmePista2>
+      <alarmePista1>12:06</alarmePista1>
+      <alarmePista2>12:07</alarmePista2>
       <alarmePista3>00:00</alarmePista3>
    </alarme>
    <plantitura>

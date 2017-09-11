@@ -90,49 +90,31 @@ class Plantitura
         else
         {
           playStop=false;
-          plantituraPronta=false;
         }
       }
     }
   }
   
 }
-  
-public void plantitura (String plantituraSeq)
-{
-  String [] getSequencia = split (plantituraSeq, ",");
-  boolean envia=true;
-  plantituraPronta=false;
-  
-  if (getSequencia.length>0)
+
+//plant picture load, trigger by the ControlP5 event
+void fileSelectedFotografia (File selection) 
+{  
+  if (selection == null) 
   {
-    int [] sequenciaInt = new int [getSequencia.length];
     
-    outerloop:
-    for (int i=0; i<getSequencia.length;i++)
-    {
-      sequenciaInt[i]=parseInt(getSequencia[i]);
-        
-        if (sequenciaInt[i]==1 ||sequenciaInt[i]==2 ||sequenciaInt[i]==3 ||sequenciaInt[i]==4 ||sequenciaInt[i]==5 ||sequenciaInt[i]==6 ||sequenciaInt[i]==7 ||sequenciaInt[i]==8 ||sequenciaInt[i]==9 ||sequenciaInt[i]==10 ||sequenciaInt[i]==11 ||sequenciaInt[i]==12)
-        {
-          sequenciaInt[i]=sequenciaInt[i];
-        }
-        else
-        {
-          JOptionPane.showMessageDialog(frame, "Ups! Definições plantitura erradas. \n"+" \n"+"Introduzir números entre 1 e 12. \n"+ "ex: 1,4,2,12,9 \n"+ "(terminar sem vírgula)");
-          envia=false;
-          break outerloop;
-        }
-    }
-    if(envia)
-    {
-      JOptionPane.showMessageDialog(frame, "Plantitura pronta!");
-      plantituraPronta=true;
-      setSequencia=sequenciaInt;
-    }
-  }
+  } 
   else
   {
-    plantituraPronta=false;
+    try
+    {
+    bonsaiEscolhido= loadImage(selection.getAbsolutePath());
+    bonsaiEscolhido.resize(123, 128);
+    bonsai=bonsaiEscolhido;
+    }
+    catch(java.lang.NullPointerException exception)
+    {
+      JOptionPane.showMessageDialog(frame, "p.f. escolher um ficheiro de imagem!");
+    }
   }
 }

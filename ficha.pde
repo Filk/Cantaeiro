@@ -63,13 +63,12 @@ void keyPressed()
 {
   if (key=='f')
   {
-    //alarme[0].caixaTemporizador.setValue("11:33");
-    //cp5.getController("alarme0").setUpdate(true);
-    //alarmeXML[0]=true;
-    //somAlarmeTocou[0]=false;
-    //cp5.getController("alarme0").setBroadcast(true);
-    //cp5.getController("alarme0").setStringValue("11:33");
-    //alarme[0].caixaTemporizador.submit();
+    //println(sliderThreshold[0].rangeThreshold.getInt());
+    //sliderThreshold[0].rangeThreshold.setLowValue(10);
+    //sliderThreshold[0].rangeThreshold.setHighValue(149);
+    //println((int)ps[0].sl.getValue());
+    //println(tocaSamples[0].meuSample.getSimpleName());
+    //println(alarme[0].caixaTemporizador.getText());
   }
   if (areaSelecionada)
   {    

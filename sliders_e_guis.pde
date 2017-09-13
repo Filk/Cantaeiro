@@ -1,3 +1,5 @@
+int rangeController0, rangeController1, rangeController2;
+
 class MeuSliderEscolheThreshold
 {
   Range rangeThreshold;
@@ -10,17 +12,17 @@ class MeuSliderEscolheThreshold
        .setPosition(xTemp,yTemp)
        .setSize(200,33)
        .setHandleSize(10)
+       .setDecimalPrecision(1)
        .setRange(0,1023)
        .setRangeValues(300,400)
-       .setDecimalPrecision(0)
        // after the initialization we turn broadcast back on again
        .setBroadcast(true)
        .setColorForeground(color(0,21,100))
        .setColorBackground(color(255,40,100))  
        ;
        
-     cp5.getController("rangeController"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(10).setText("âmbito").setColor(255);
      cp5.getController("rangeController"+indexTemp).getValueLabel().setFont(fonteP5).setSize(11);
+     cp5.getController("rangeController"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(10).setText("âmbito").setColor(255);
      cp5.getController("rangeController"+indexTemp).getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
   }
 }

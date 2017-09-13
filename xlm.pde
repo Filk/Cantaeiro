@@ -49,47 +49,101 @@ void fileSelectedGuardar(File selection)
     XML xml = loadXML("data/cantaeiroOriginal.xml");
     xml.setName(nomeProjeto);
     
-    //saves a copy of the image of the plant and the xml info
-    if (bonsaiEscolhido!= null)
-    {
-      bonsaiEscolhido.save(caminhoGuardar + "/" + "minhaPlanta" + ".jpg");
-      
       if (xml.hasChildren())
+      { 
+        XML sensorGalvanicoHigh = xml.getChild("sensores").getChild("sensorGalvanicoHigh");
+        sensorGalvanicoHigh.setContent(str(sliderThreshold[0].rangeThreshold.getHighValue()));
+        
+        XML sensorGalvanicoLow = xml.getChild("sensores").getChild("sensorGalvanicoLow");
+        sensorGalvanicoLow.setContent(str(sliderThreshold[0].rangeThreshold.getLowValue()));
+        
+        XML sensorLuzHigh = xml.getChild("sensores").getChild("sensorLuzHigh");
+        sensorLuzHigh.setContent(str(sliderThreshold[1].rangeThreshold.getHighValue()));
+        
+        XML sensorLuzLow = xml.getChild("sensores").getChild("sensorLuzLow");
+        sensorLuzLow.setContent(str(sliderThreshold[1].rangeThreshold.getLowValue()));
+        
+        XML sensorHumidadeHigh = xml.getChild("sensores").getChild("sensorHumidadeHigh");
+        sensorHumidadeHigh.setContent(str(sliderThreshold[2].rangeThreshold.getHighValue()));
+        
+        XML sensorHumidadeLow = xml.getChild("sensores").getChild("sensorHumidadeLow");
+        sensorHumidadeLow.setContent(str(sliderThreshold[2].rangeThreshold.getLowValue()));
+        
+        for (int k=0; k<numeroPistas; k++)
+        {
+        XML pistasSaveXml = xml.getChild("pistasSensorEscolhido").getChild("pista"+(k+1));
+        pistasSaveXml.setContent(str((int)ps[k].sl.getValue()));
+        }
+        
+        XML fichaNome = xml.getChild("ficha").getChild("nome");
+        fichaNome.setContent(ficha.entrada[0].getText());
+        
+        XML fichaAltura = xml.getChild("ficha").getChild("altura");
+        fichaAltura.setContent(ficha.entrada[1].getText());
+        
+        XML fichaCor = xml.getChild("ficha").getChild("cor");
+        fichaCor.setContent(ficha.entrada[2].getText());
+        
+        XML fichaForma = xml.getChild("ficha").getChild("forma");
+        fichaForma.setContent(ficha.entrada[3].getText());
+        
+        XML fichaTamanho = xml.getChild("ficha").getChild("tamanho");
+        fichaTamanho.setContent(ficha.entrada[4].getText());
+        
+        XML fichaCientifico = xml.getChild("ficha").getChild("cientifico");
+        fichaCientifico.setContent(ficha.entrada[5].getText());
+
+        XML espaco = xml.getChild("descricao").getChild("espaco");
+        espaco.setContent(ficha.adicionalComentarios.getText());
+        
+      //saves sounds
+      for (int i=0; i<numeroSamples; i++)
       {
+        if (tocaSamples[i].novoSom)
+        {
+          String guarda = caminhoGuardar + System.getProperty("file.separator") + tocaSamples[i].meuSample.getSimpleName();
+          try
+          {
+            tocaSamples[i].meuSample.write(guarda);
+            XML novoSom = xml.getChild("samples").getChild("sample"+i);
+            novoSom.setContent(tocaSamples[i].meuSample.getSimpleName());
+          }
+          catch (Exception e)
+          {
+            //JOptionPane.showMessageDialog(frame, "Ups!\n" + "Algo correu mal \n", "p.f. tente outra vez!", JOptionPane.WARNING_MESSAGE);
+          }
+        }
+      }
+      
+      //saves alarm info
+      for (int j=0; j<numeroPistas; j++)
+      {
+        XML alarmInfo = xml.getChild("alarme").getChild("alarmePista"+(j+1));
+        alarmInfo.setContent(alarme[j].caixaTemporizador.getText());
+      }
+      
+      //saves the plant score to the xml file
+      if (plantituraPronta)
+      {      
+        if (xml.hasChildren())
+        {
+          XML plantituraNova = xml.getChild("plantitura").getChild("sequencia");
+          plantituraNova.setContent(plantituraToSave);
+        }
+      }
+      
+      //saves a copy of the image of the plant and the xml info
+      if (bonsaiEscolhido!= null)
+      {
+        bonsaiEscolhido.save(caminhoGuardar + "/" + "minhaPlanta" + ".jpg");
         XML imagemNovaPlanta = xml.getChild("fotografiaPlanta").getChild("caminhoPlanta");
         imagemNovaPlanta.setContent("/minhaPlanta.jpg");
       }
+            
+      saveXML(xml, caminhoGuardar + "/" + "Cantaeiro" + ".xml");
     }
     
-    //saves the plant score to the xml file
-    if (plantituraPronta)
-    {      
-      if (xml.hasChildren())
-      {
-        XML plantituraNova = xml.getChild("plantitura").getChild("sequencia");
-        plantituraNova.setContent(plantituraToSave);
-      }
-    }
-    
-    //saves the alarm info to the xml file
-    if (plantituraPronta)
-    {      
-      if (xml.hasChildren())
-      {
-        XML plantituraNova = xml.getChild("plantitura").getChild("sequencia");
-        plantituraNova.setContent(plantituraToSave);
-      }
-    }
-    
-    saveXML(xml, caminhoGuardar + "/" + "Cantaeiro" + ".xml");
-    //se houver nova fotografia
-    //faz cópia da nova fotografia
-    //guarda na pasta
-    //escreve no xml
-    //se houver novos sons
-    //faz cópia
-    //guarda na pasta
-    //escreve no xml
+    JOptionPane.showMessageDialog(frame, "Projeto Cantaeiro guardado!");
   }
 }
 
@@ -107,29 +161,28 @@ void fileSelectedAbrir(File selection)
       infoToLoadXML = loadXML(selection.getAbsolutePath());
   
       XML sensorGalvanicoHigh = infoToLoadXML.getChild("sensores").getChild("sensorGalvanicoHigh");
-      sliderThreshold[0].rangeThreshold.setHighValue(sensorGalvanicoHigh.getIntContent());
+      sliderThreshold[0].rangeThreshold.setHighValue(sensorGalvanicoHigh.getFloatContent());
       
       XML sensorGalvanicoLow = infoToLoadXML.getChild("sensores").getChild("sensorGalvanicoLow");
-      sliderThreshold[0].rangeThreshold.setLowValue(sensorGalvanicoLow.getIntContent());
+      sliderThreshold[0].rangeThreshold.setLowValue(sensorGalvanicoLow.getFloatContent());
       
       XML sensorLuzHigh = infoToLoadXML.getChild("sensores").getChild("sensorLuzHigh");
-      sliderThreshold[1].rangeThreshold.setHighValue(sensorLuzHigh.getIntContent());
+      sliderThreshold[1].rangeThreshold.setHighValue(sensorLuzHigh.getFloatContent());
       
       XML sensorLuzLow = infoToLoadXML.getChild("sensores").getChild("sensorLuzLow");
-      sliderThreshold[1].rangeThreshold.setLowValue(sensorLuzLow.getIntContent());
+      sliderThreshold[1].rangeThreshold.setLowValue(sensorLuzLow.getFloatContent());
       
       XML sensorHumidadeHigh = infoToLoadXML.getChild("sensores").getChild("sensorHumidadeHigh");
-      sliderThreshold[2].rangeThreshold.setHighValue(sensorHumidadeHigh.getIntContent());
+      sliderThreshold[2].rangeThreshold.setHighValue(sensorHumidadeHigh.getFloatContent());
       
       XML sensorHumidadeLow = infoToLoadXML.getChild("sensores").getChild("sensorHumidadeLow");
-      sliderThreshold[2].rangeThreshold.setLowValue(sensorHumidadeLow.getIntContent());
-  
-      XML pista1 = infoToLoadXML.getChild("pistasSensorEscolhido").getChild("pista1");
-      ps[0].sl.setValue(pista1.getIntContent());
-      XML pista2 = infoToLoadXML.getChild("pistasSensorEscolhido").getChild("pista2");
-      ps[1].sl.setValue(pista2.getIntContent());
-      XML pista3 = infoToLoadXML.getChild("pistasSensorEscolhido").getChild("pista3");
-      ps[2].sl.setValue(pista3.getIntContent());
+      sliderThreshold[2].rangeThreshold.setLowValue(sensorHumidadeLow.getFloatContent());
+      
+      for (int k=0; k<numeroPistas; k++)
+      {
+        XML pistas = infoToLoadXML.getChild("pistasSensorEscolhido").getChild("pista"+(k+1));
+        ps[k].sl.setValue(pistas.getIntContent());
+      }
   
       XML nome = infoToLoadXML.getChild("ficha").getChild("nome");
       ficha.entrada[0].setText(nome.getContent());
@@ -160,7 +213,6 @@ void fileSelectedAbrir(File selection)
         //loads new sounds if they are different from the original ones
         if (sample.getContent()!= "" && !sample.getContent().equals(i+".wav"))
         {
-          println("tou aqui");
           SampleManager.removeSample(tocaSamples[i].meuSample);
           tocaSamples[i].meuSample=SampleManager.sample(dataPath(sample.getContent()));
           if(tocaSamples[i].meuSample!=null)
@@ -190,7 +242,7 @@ void fileSelectedAbrir(File selection)
       assinalaXML=true;
       plantitura.plantituraSeq.submit();
       
-      //LOADS
+      //loads plant picture
       XML fotografiaPlanta = infoToLoadXML.getChild("fotografiaPlanta").getChild("caminhoPlanta");
       PImage bonsaiEscolhido= loadImage(fotografiaPlanta.getContent());
       bonsaiEscolhido.resize(123, 128);

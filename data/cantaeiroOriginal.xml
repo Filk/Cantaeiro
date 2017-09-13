@@ -9,7 +9,7 @@
       <sensorHumidadeLow>1000</sensorHumidadeLow>
    </sensores>
    <pistasSensorEscolhido>
-      <pista1>0</pista1>
+      <pista1>3</pista1>
       <pista2>1</pista2>
       <pista3>2</pista3>
    </pistasSensorEscolhido>

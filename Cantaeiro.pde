@@ -254,7 +254,7 @@ public void controlEvent(ControlEvent theEvent)
   {
     if (theEvent.getController().getName().equals("rangeController"+j)) 
     {
-      //println("range controller"+j);
+      println(sliderThreshold[j].rangeThreshold.getHighValue());
     }
     if (theEvent.getController().getName().equals("numberboxValue"+j)) 
     {

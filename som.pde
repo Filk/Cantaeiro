@@ -5,7 +5,7 @@ class GereSamples
   Gain gainObject;
   String pathSample;
   double duracaoFile;
-  boolean sampleChegouFim;
+  boolean sampleChegouFim, novoSom;
   
   GereSamples (String tempFicheiroInicio)
   {
@@ -19,6 +19,7 @@ class GereSamples
     player.setKillOnEnd(false);
     duracaoFile=meuSample.getLength();
     sampleChegouFim=false;
+    novoSom=false;
     player.setToEnd();
   }
   
@@ -148,7 +149,7 @@ class NovosSons
   }
 }
 
-//plant picture load, trigger by the ControlP5 event
+//sound load, trigger by the ControlP5 event
 void loadNovoSom (File selection) 
 {  
   if (selection == null) 
@@ -163,6 +164,8 @@ void loadNovoSom (File selection)
     tocaSamples[indexNovoSom].meuSample=SampleManager.sample(selection.getAbsolutePath());
     tocaSamples[indexNovoSom].player.setSample(tocaSamples[indexNovoSom].meuSample);
     tocaSamples[indexNovoSom].player.setToEnd();
+    tocaSamples[indexNovoSom].novoSom=true;
+    JOptionPane.showMessageDialog(frame, "Novo som, ok!");
     }
     catch(java.lang.NullPointerException exception)
     {

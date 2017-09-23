@@ -267,9 +267,7 @@ public void controlEvent(ControlEvent theEvent)
   //save Cantaeiro
   if (theEvent.isFrom("guardar"))
   {
-    println("0");
     selectOutput("Guardar o ficheiro Cant(a)eiro:", "fileSelectedGuardar");
-    println("1");
   }
   
   //load Cantaeiro

@@ -74,8 +74,8 @@ void fileSelectedGuardar(File selection)
         
         for (int k=0; k<numeroPistas; k++)
         {
-        XML pistasSaveXml = xml.getChild("pistasSensorEscolhido").getChild("pista"+(k+1));
-        pistasSaveXml.setContent(str((int)ps[k].sl.getValue()));
+          XML pistasSaveXml = xml.getChild("pistasSensorEscolhido").getChild("pista"+(k+1));
+          pistasSaveXml.setContent(str((int)ps[k].sl.getValue()));
         }
         
         XML fichaNome = xml.getChild("ficha").getChild("nome");
@@ -125,10 +125,13 @@ void fileSelectedGuardar(File selection)
       }
       
       //saves alarm info
-      for (int j=0; j<numeroPistas; j++)
+      for (int j=0; j<alarme.length; j++)
       {
         XML alarmInfo = xml.getChild("alarme").getChild("alarmePista"+(j+1));
-        alarmInfo.setContent(alarme[j].caixaTemporizador.getText());
+        if(alarme[j].caixaTemporizador.getText()!= " ")
+        {
+          alarmInfo.setContent(alarme[j].caixaTemporizador.getText());
+        }
       }
       
       //saves the plant score to the xml file
@@ -235,11 +238,15 @@ void fileSelectedAbrir(File selection)
       {
         String alarmeTemp= "alarmePista"+(j+1);
         XML alarmeTempXML = infoToLoadXML.getChild("alarme").getChild(alarmeTemp);
-        alarme[j].caixaTemporizador.setValue(alarmeTempXML.getContent());
-        alarmeXML[j]=true;
-        somAlarmeTocou[j]=false;
-        cp5.getController("alarme"+j).setStringValue(alarmeTempXML.getContent());
-        alarme[j].caixaTemporizador.submit();        
+        alarmeTempXML.getContent();
+        if(alarmeTempXML.getContent()!="")
+        {
+          alarme[j].caixaTemporizador.setValue(alarmeTempXML.getContent());
+          alarmeXML[j]=true;
+          somAlarmeTocou[j]=false;
+          cp5.getController("alarme"+j).setStringValue(alarmeTempXML.getContent());
+          alarme[j].caixaTemporizador.submit();
+        }
       }
       
       //loads plantitura
@@ -252,7 +259,8 @@ void fileSelectedAbrir(File selection)
       
       //loads plant picture
       XML fotografiaPlanta = infoToLoadXML.getChild("fotografiaPlanta").getChild("caminhoPlanta");
-      PImage bonsaiEscolhido= loadImage(fotografiaPlanta.getContent());
+      String caminhoLoudar = selection.getParent();
+      PImage bonsaiEscolhido= loadImage(caminhoLoudar + fotografiaPlanta.getContent());
       bonsaiEscolhido.resize(123, 128);
       bonsai=bonsaiEscolhido;
     }

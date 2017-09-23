@@ -43,12 +43,15 @@ void fileSelectedGuardar(File selection)
   } 
   else 
   {
-    //process to save info
     String nomeProjeto=selection.getName();
     String caminhoGuardar = selection.getPath();
+    
     XML xml = loadXML("data/cantaeiroOriginal.xml");
     xml.setName(nomeProjeto);
+    //needed to create a file and thus create a folder
+    saveXML(xml, caminhoGuardar + "/" + "Cantaeiro" + ".xml");
     
+    //process to save info
       if (xml.hasChildren())
       { 
         XML sensorGalvanicoHigh = xml.getChild("sensores").getChild("sensorGalvanicoHigh");
@@ -99,19 +102,25 @@ void fileSelectedGuardar(File selection)
       //saves sounds
       for (int i=0; i<numeroSamples; i++)
       {
+        //String guarda = caminhoGuardar + System.getProperty("file.separator") + tocaSamples[i].meuSample.getSimpleName();
+        String guarda = caminhoGuardar + "/" + tocaSamples[i].meuSample.getSimpleName();
+        
         if (tocaSamples[i].novoSom)
         {
-          String guarda = caminhoGuardar + System.getProperty("file.separator") + tocaSamples[i].meuSample.getSimpleName();
-          try
+          Sample sampleParaGravar;
+          sampleParaGravar=tocaSamples[i].meuSample;
+          try 
           {
-            tocaSamples[i].meuSample.write(guarda);
-            XML novoSom = xml.getChild("samples").getChild("sample"+i);
-            novoSom.setContent(tocaSamples[i].meuSample.getSimpleName());
-          }
-          catch (Exception e)
+            sampleParaGravar.write(guarda);
+            println("foi");
+          } 
+          catch (Exception e) 
           {
-            //JOptionPane.showMessageDialog(frame, "Ups!\n" + "Algo correu mal \n", "p.f. tente outra vez!", JOptionPane.WARNING_MESSAGE);
+            System.out.println("Couldn't save sound:");
+            e.printStackTrace();
           }
+          XML novoSom = xml.getChild("samples").getChild("sample"+i);
+          novoSom.setContent(tocaSamples[i].meuSample.getSimpleName());
         }
       }
       
@@ -142,9 +151,8 @@ void fileSelectedGuardar(File selection)
             
       saveXML(xml, caminhoGuardar + "/" + "Cantaeiro" + ".xml");
     }
-    
-    JOptionPane.showMessageDialog(frame, "Projeto Cantaeiro guardado!");
   }
+
 }
 
 //load info, trigger by the ControlP5 event
@@ -209,16 +217,16 @@ void fileSelectedAbrir(File selection)
       //load sounds
       for (int i=0; i<numeroSamples; i++)
       {
-        XML sample = infoToLoadXML.getChild("samples").getChild("sample"+i);
+        XML sampleToLoad = infoToLoadXML.getChild("samples").getChild("sample"+i);
+        //println(selection.getParent()+ System.getProperty("file.separator") + sampleToLoad.getContent());
         //loads new sounds if they are different from the original ones
-        if (sample.getContent()!= "" && !sample.getContent().equals(i+".wav"))
+        SampleManager.removeSample(tocaSamples[i].meuSample);
+        tocaSamples[i].meuSample=SampleManager.sample(selection.getParent()+ System.getProperty("file.separator") + sampleToLoad.getContent());
+        if(tocaSamples[i].meuSample!=null)
         {
-          SampleManager.removeSample(tocaSamples[i].meuSample);
-          tocaSamples[i].meuSample=SampleManager.sample(dataPath(sample.getContent()));
-          if(tocaSamples[i].meuSample!=null)
-          {
-            tocaSamples[i].player.setSample(tocaSamples[i].meuSample);
-          }
+          tocaSamples[i].player.setSample(tocaSamples[i].meuSample);
+          tocaSamples[i].player.setToEnd();
+          tocaSamples[i].novoSom=true;
         }
       }
       

@@ -94,7 +94,8 @@ class PistaSamples
       rect(x,y+alturaOpen+((i*espacamentoEntreBlocos)+alturaOpen), comprimentoBloco, alturaBloco);
       
       //checks if mouse is inside sample box and Makey-Makey
-      if (tempA>=x && tempA<(x+comprimentoBloco) && tempB>=y+alturaOpen+(i*espacamentoEntreBlocos)+20 && tempB<(y+alturaBloco+alturaOpen+(i*espacamentoEntreBlocos)+20) && !sl.isOpen() && ratoClicado || keyPressed && key==makey[i+4*indexPista])
+      //|| keyPressed && key==makey[i+4*indexPista] (code for makey-makey)
+      if (tempA>=x && tempA<(x+comprimentoBloco) && tempB>=y+alturaOpen+(i*espacamentoEntreBlocos)+20 && tempB<(y+alturaBloco+alturaOpen+(i*espacamentoEntreBlocos)+20) && !sl.isOpen() && ratoClicado)
       {
          tocaSamples[i+inicioQualSample].player.reTrigger();
          //sample box 
@@ -165,7 +166,6 @@ void loadNovoSom (File selection)
     tocaSamples[indexNovoSom].player.setSample(tocaSamples[indexNovoSom].meuSample);
     tocaSamples[indexNovoSom].player.setToEnd();
     tocaSamples[indexNovoSom].novoSom=true;
-    JOptionPane.showMessageDialog(frame, "Novo som, ok!");
     }
     catch(java.lang.NullPointerException exception)
     {

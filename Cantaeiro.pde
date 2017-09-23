@@ -12,6 +12,8 @@ import java.util.*;
 import beads.*;
 import org.jaudiolibs.beads.*;
 import javax.swing.*;
+import java.io.IOException;
+import javax.swing.ImageIcon;
 
 AudioContext ac;
 ControlP5 cp5;
@@ -147,15 +149,15 @@ void setup()
   {
     if(l<4)
     {
-    nSons[l]= new NovosSons (155,189+(l*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (155,189+(l*ps[0].espacamentoEntreBlocos),60,20,l);
     }
     if(l>=4&&l<8)
     {
-    nSons[l]= new NovosSons (368,189+((l-4)*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (368,189+((l-4)*ps[0].espacamentoEntreBlocos),60,20,l);
     }
     if(l>=8&&l<12)
     {
-    nSons[l]= new NovosSons (577,189+((l-8)*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (577,189+((l-8)*ps[0].espacamentoEntreBlocos),60,20,l);
     }
   }
   
@@ -242,7 +244,7 @@ public void controlEvent(ControlEvent theEvent)
   //replace sounds
   for (int i=0;i<numeroSamples;i++) 
   {
-    if (theEvent.getController().getName().equals("novoSom"+i)) 
+    if (theEvent.isFrom("novoSom"+i)) 
     {
       indexNovoSom=i;
       selectInput("Escolhe novo som:", "loadNovoSom");
@@ -252,30 +254,32 @@ public void controlEvent(ControlEvent theEvent)
   //update sliders
   for (int j=0;j<numeroSlides;j++) 
   {
-    if (theEvent.getController().getName().equals("rangeController"+j)) 
+    if (theEvent.isFrom("rangeController"+j)) 
     {
-      println(sliderThreshold[j].rangeThreshold.getHighValue());
+      //println(sliderThreshold[j].rangeThreshold.getHighValue());
     }
-    if (theEvent.getController().getName().equals("numberboxValue"+j)) 
+    if (theEvent.isFrom("numberboxValue"+j)) 
     {
       //println("number box"+j);
     }
   }
   
   //save Cantaeiro
-  if (theEvent.getController().getName().equals("guardar")) 
+  if (theEvent.isFrom("guardar"))
   {
+    println("0");
     selectOutput("Guardar o ficheiro Cant(a)eiro:", "fileSelectedGuardar");
+    println("1");
   }
   
   //load Cantaeiro
-  if (theEvent.getController().getName().equals("abrir")) 
+  if (theEvent.isFrom("abrir")) 
   {
     selectInput("Escolhe o ficheiro Cant(a)eiro:", "fileSelectedAbrir");
   }
 
   //loads plant photo
-  if (theEvent.getController().getName().equals("imagem")) 
+  if (theEvent.isFrom("imagem")) 
   {
     selectInput("Escolhe fotografia da planta", "fileSelectedFotografia");
   }  

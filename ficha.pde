@@ -12,9 +12,9 @@ class FichaDescritiva
     descritores.append("Altura");
     descritores.append("Cores");
     descritores.append("Forma das folhas");
-    descritores.append("Tamanho médio das folhas");
+    descritores.append("Características");
     descritores.append("Nome Científico da Planta");
-    descritores.append("Descrição do espaço onde a planta vive");
+    descritores.append("Histórias da minha planta...");
 
 
     for (int i=0; i<numeroDescritores; i++)
@@ -61,15 +61,7 @@ class FichaDescritiva
 
 void keyPressed()
 {
-  if (key=='f')
-  {
-    //println(sliderThreshold[0].rangeThreshold.getInt());
-    //sliderThreshold[0].rangeThreshold.setLowValue(10);
-    //sliderThreshold[0].rangeThreshold.setHighValue(149);
-    //println((int)ps[0].sl.getValue());
-    //println(tocaSamples[0].meuSample.getSimpleName());
-    //println(alarme[0].caixaTemporizador.getText());
-  }
+  //code to write text in the description of the plant
   if (areaSelecionada)
   {    
     if (keyCode==BACKSPACE && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
@@ -96,6 +88,7 @@ void keyPressed()
   }
 }
 
+//function to make it green when user if able to write text in the description of the plant
 void sabeQueEstaNaZona(int xTemp, int yTemp)
 {  
   if (xTemp>=xStartPosFicha && xTemp<xStartPosFicha+comprimentoFicha && yTemp>=yStartPosFicha+(55*6) && yTemp<yStartPosFicha+(55*6)+alturaFicha && ratoClicado)

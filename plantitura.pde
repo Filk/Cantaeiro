@@ -58,22 +58,6 @@ class Plantitura
         //println(currentPlayingIndex + " " + i);
         tocaSamples[i].player.reset();
         tocaSamples[i].player.reTrigger();
-        
-         if (i<5)
-         {
-           p=0;
-         }
-         else if (i>=5&&i<9)
-         {
-           p=1;
-         }
-         else if (i>=9&&i<13)
-         {
-           p=2;
-         }
-        //sample box 
-        fill(10,200,10);
-        rect(ps[p%3].x,ps[p%3].y+ps[p%3].alturaOpen+((p%3*ps[p%3].espacamentoEntreBlocos)+ps[p%3].alturaOpen), ps[p%3].comprimentoBloco, ps[p%3].alturaBloco);
         segue=false;
       }
       
@@ -101,8 +85,7 @@ class Plantitura
 void fileSelectedFotografia (File selection) 
 {  
   if (selection == null) 
-  {
-    
+  { 
   } 
   else
   {
@@ -114,7 +97,7 @@ void fileSelectedFotografia (File selection)
     }
     catch(java.lang.NullPointerException exception)
     {
-      JOptionPane.showMessageDialog(frame, "p.f. escolher um ficheiro de imagem!");
+      JOptionPane.showMessageDialog(frame, "p.f. escolher um ficheiro de imagem!", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
     }
   }
 }

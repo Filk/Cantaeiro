@@ -37,7 +37,6 @@ int numeroSampleBoxes=4;
 StringList nomesSons;
 int numeroPistas=3;
 PistaSamples [] ps = new PistaSamples[numeroSampleBoxes];
-char [] makey = new char [numeroSamples];
 
 boolean ratoClicado=false;
 
@@ -76,9 +75,16 @@ boolean assinalaXML=false;
 NovosSons [] nSons = new NovosSons [numeroSamples];
 int indexNovoSom;
 
+boolean gravouBem=false;
+
 void setup()
 {
   size (1024, 700);
+  
+  //uncomment the first two lines below when compiling for Pc's or Linux
+  //PImage titlebaricon=loadImage("icon_32x32.png");
+  //surface.setTitle(titlebaricon);
+  
   surface.setTitle("Cant(a)eiro");
 
   fonte= createFont("ABeeZee-Regular.otf", 14, true);
@@ -131,19 +137,6 @@ void setup()
   plantitura= new Plantitura(15, 590, 580, 30);
 
   lsXML= new loadSaveXML(120, 660, 60, 30);
-
-  makey[0]='w';
-  makey[1]='a';
-  makey[2]='s';
-  makey[3]='d';
-  makey[4]='f';
-  makey[5]='g';
-  makey[6]='h';
-  makey[7]='j';
-  makey[8]='k';
-  makey[9]='l';
-  makey[10]='o';
-  makey[11]='p';
   
   for (int l=0; l<nSons.length; l++)
   {
@@ -160,6 +153,15 @@ void setup()
       nSons[l]= new NovosSons (577,189+((l-8)*ps[0].espacamentoEntreBlocos),60,20,l);
     }
   }
+  
+  //info in ficha
+  ficha.entrada[0].setText("Cant(a)eiro");
+  ficha.entrada[1].setText("10cm");
+  ficha.entrada[2].setText("verde");
+  ficha.entrada[3].setText("elipse");
+  ficha.entrada[4].setText("planta de interior, meia luz, 12ºC, média água");
+  ficha.entrada[5].setText("Clusia Rosea");
+  ficha.adicionalComentarios.setText("Histórias da minha planta...");
   
   ac.start();
 }
@@ -189,6 +191,12 @@ void draw()
   
   //plant picture
   image(bonsai,667,26);
+  
+  if(gravouBem)
+  {
+    JOptionPane.showMessageDialog(frame, "Cant(a)eiro guardado!", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
+    gravouBem=false;
+  }
 }
 
 void mousePressed()
@@ -246,6 +254,7 @@ public void controlEvent(ControlEvent theEvent)
   {
     if (theEvent.isFrom("novoSom"+i)) 
     {
+      //open dialog box to choose new sound file
       indexNovoSom=i;
       selectInput("Escolhe novo som:", "loadNovoSom");
     }
@@ -264,7 +273,7 @@ public void controlEvent(ControlEvent theEvent)
     }
   }
   
-  //save Cantaeiro
+  //saves Cantaeiro
   if (theEvent.isFrom("guardar"))
   {
     selectOutput("Guardar o ficheiro Cant(a)eiro:", "fileSelectedGuardar");
@@ -304,7 +313,7 @@ public void controlEvent(ControlEvent theEvent)
               if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && !alarmeXML[k])
               {
                 somAlarmeTocou[indexAlarme]=false;
-                JOptionPane.showMessageDialog(frame, "Alarme Pronto!");
+                JOptionPane.showMessageDialog(frame, "Alarme Pronto!", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
               }
               //loaded from XML file
               else if (horaDefinida[indexAlarme]>=0 && horaDefinida[indexAlarme]<24 && minutoDefinido[indexAlarme]>=0 && minutoDefinido[indexAlarme]<60 && alarmeXML[k])
@@ -314,18 +323,18 @@ public void controlEvent(ControlEvent theEvent)
               }
               else
               {
-                JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme2. \n"+"hora(0-23):minutos(0-59)");
+                JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme2. \n"+"hora(0-23):minutos(0-59)", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
               }
           }
           catch(Exception e)
           {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme22. \n"+"hora(0-23):minutos(0-59)"); 
+            JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme22. \n"+"hora(0-23):minutos(0-59)", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png"))); 
           }
         }
         else
         {
-          JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme222. \n"+"hora(0-23):minutos(0-59)");
+          JOptionPane.showMessageDialog(frame, "Ups! \n"+"Definições erradas no alarme222. \n"+"hora(0-23):minutos(0-59)", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
         }
      }
    }
@@ -342,6 +351,7 @@ public void controlEvent(ControlEvent theEvent)
         int [] sequenciaInt = new int [getSequencia.length];
         plantituraToSave=theEvent.getStringValue();
         
+        //command to break out of loop before it reaches end
         outerloop:
         for (int i=0; i<getSequencia.length;i++)
         {
@@ -353,8 +363,9 @@ public void controlEvent(ControlEvent theEvent)
             }
             else
             {
-              JOptionPane.showMessageDialog(frame, "Ups! Definições plantitura erradas. \n"+" \n"+"Introduzir números entre 1 e 12. \n"+ "ex: 1,4,2,12,9 \n"+ "(terminar sem vírgula)");
+              JOptionPane.showMessageDialog(frame, "Ups! Definições plantitura erradas. \n"+" \n"+"Introduzir números entre 1 e 12. \n"+ "ex: 1,4,2,12,9 \n"+ "(terminar sem vírgula)", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
               assinalaPlantituraPronta=false;
+              //breaks out of loop before it gets to the end
               break outerloop;
             }
         }
@@ -362,7 +373,7 @@ public void controlEvent(ControlEvent theEvent)
         {
           if(!assinalaXML)
           {
-            JOptionPane.showMessageDialog(frame, "Plantitura pronta!");
+            JOptionPane.showMessageDialog(frame, "Plantitura pronta!", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
           }
           plantituraPronta=true;
           setSequencia=sequenciaInt;
@@ -375,6 +386,4 @@ public void controlEvent(ControlEvent theEvent)
       assinalaXML=false;
    }
   }
- 
-
 }

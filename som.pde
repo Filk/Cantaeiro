@@ -92,9 +92,7 @@ class PistaSamples
       //sample box 
       fill(100,100,100);
       rect(x,y+alturaOpen+((i*espacamentoEntreBlocos)+alturaOpen), comprimentoBloco, alturaBloco);
-      
-      //checks if mouse is inside sample box and Makey-Makey
-      //|| keyPressed && key==makey[i+4*indexPista] (code for makey-makey)
+
       if (tempA>=x && tempA<(x+comprimentoBloco) && tempB>=y+alturaOpen+(i*espacamentoEntreBlocos)+20 && tempB<(y+alturaBloco+alturaOpen+(i*espacamentoEntreBlocos)+20) && !sl.isOpen() && ratoClicado)
       {
          tocaSamples[i+inicioQualSample].player.reTrigger();
@@ -169,7 +167,7 @@ void loadNovoSom (File selection)
     }
     catch(java.lang.NullPointerException exception)
     {
-      JOptionPane.showMessageDialog(frame, "p.f. escolher ficheiro de som!");
+      JOptionPane.showMessageDialog(frame, "p.f. escolher ficheiro de som!", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
     }
   }
 }

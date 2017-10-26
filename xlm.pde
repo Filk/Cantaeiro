@@ -36,7 +36,7 @@ class loadSaveXML
 
 //save info, trigger by the ControlP5 event
 void fileSelectedGuardar(File selection) 
-{  
+{   
   if (selection == null) 
   {
     
@@ -90,8 +90,8 @@ void fileSelectedGuardar(File selection)
         XML fichaForma = xml.getChild("ficha").getChild("forma");
         fichaForma.setContent(ficha.entrada[3].getText());
         
-        XML fichaTamanho = xml.getChild("ficha").getChild("tamanho");
-        fichaTamanho.setContent(ficha.entrada[4].getText());
+        XML fichaCaracteristicas = xml.getChild("ficha").getChild("caracteristicas");
+        fichaCaracteristicas.setContent(ficha.entrada[4].getText());
         
         XML fichaCientifico = xml.getChild("ficha").getChild("cientifico");
         fichaCientifico.setContent(ficha.entrada[5].getText());
@@ -161,7 +161,7 @@ void fileSelectedGuardar(File selection)
       saveXML(xml, caminhoGuardar + "/" + "Cantaeiro" + ".xml");
     }
   }
-
+  gravouBem=true;
 }
 
 //load info, trigger by the ControlP5 event
@@ -213,8 +213,8 @@ void fileSelectedAbrir(File selection)
       XML forma = infoToLoadXML.getChild("ficha").getChild("forma");
       ficha.entrada[3].setText(forma.getContent());
   
-      XML tamanho = infoToLoadXML.getChild("ficha").getChild("tamanho");
-      ficha.entrada[4].setText(tamanho.getContent());
+      XML caracteristicas = infoToLoadXML.getChild("ficha").getChild("caracteristicas");
+      ficha.entrada[4].setText(caracteristicas.getContent());
   
       XML cientifico = infoToLoadXML.getChild("ficha").getChild("cientifico");
       ficha.entrada[5].setText(cientifico.getContent());
@@ -272,7 +272,7 @@ void fileSelectedAbrir(File selection)
     }
     catch(RuntimeException e)
     {
-     JOptionPane.showMessageDialog(frame, "p.f. escolher o ficheiro Cantaeiro.xml!");
+     JOptionPane.showMessageDialog(frame, "p.f. escolher o ficheiro Cantaeiro.xml!", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
     }
   }
 }

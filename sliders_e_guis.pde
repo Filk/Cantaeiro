@@ -1,5 +1,3 @@
-int rangeController0, rangeController1, rangeController2;
-
 class MeuSliderEscolheThreshold
 {
   Range rangeThreshold;
@@ -21,7 +19,7 @@ class MeuSliderEscolheThreshold
        .setColorBackground(color(255,40,100))  
        ;
        
-     cp5.getController("rangeController"+indexTemp).getValueLabel().setFont(fonteP5).setSize(11);
+     //cp5.getController("rangeController"+indexTemp).getValueLabel().setFont(fonteP5).setSize(11);
      cp5.getController("rangeController"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(10).setText("âmbito").setColor(255);
      cp5.getController("rangeController"+indexTemp).getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
   }

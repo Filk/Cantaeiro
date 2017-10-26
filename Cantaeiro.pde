@@ -88,7 +88,7 @@ void setup()
   fundo= loadImage("layout.jpg");
   play= loadImage("play.png");
   stop= loadImage("stop.png");
-  bonsai= loadImage("bonsai.png");
+  bonsai= loadImage("planta.jpg");
 
   ac = new AudioContext();
   cp5 = new ControlP5(this);

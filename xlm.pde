@@ -151,6 +151,12 @@ void fileSelectedGuardar(File selection)
         XML imagemNovaPlanta = xml.getChild("fotografiaPlanta").getChild("caminhoPlanta");
         imagemNovaPlanta.setContent("/minhaPlanta.jpg");
       }
+      else
+      {
+        bonsai.save(caminhoGuardar + "/" + "minhaPlanta" + ".jpg");
+        XML imagemNovaPlanta = xml.getChild("fotografiaPlanta").getChild("caminhoPlanta");
+        imagemNovaPlanta.setContent("/minhaPlanta.jpg");
+      }
             
       saveXML(xml, caminhoGuardar + "/" + "Cantaeiro" + ".xml");
     }

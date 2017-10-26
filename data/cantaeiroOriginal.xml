@@ -47,6 +47,6 @@
       <sequencia>1,2,5,9,9,1</sequencia>
    </plantitura>
    <fotografiaPlanta>
-      <caminhoPlanta>data/bonsai.png</caminhoPlanta>
+      <caminhoPlanta>data/planta.jpg</caminhoPlanta>
    </fotografiaPlanta>
 </data>

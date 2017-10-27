@@ -1,7 +1,7 @@
 class loadSaveXML
 {
   Bang guardar, load, fotografia;
-
+  
   loadSaveXML(int xTemp, int yTemp, int comprimentoTemp, int alturaTemp)
   {
     load= cp5.addBang("abrir")
@@ -9,6 +9,9 @@ class loadSaveXML
       .setSize(comprimentoTemp, alturaTemp)
       .setFont(fonte)
       .setLabel("abrir")
+      .setColorCaptionLabel(color (4,57,27))
+      .setColorForeground(color (65, 129, 127))
+      .setColorActive(color (103, 155, 153))
       ;
 
     guardar= cp5.addBang("guardar")
@@ -16,6 +19,9 @@ class loadSaveXML
       .setSize(comprimentoTemp, alturaTemp)
       .setFont(fonte)
       .setLabel("guardar")
+      .setColorCaptionLabel(color (4,57,27))
+      .setColorForeground(color (65, 129, 127))
+      .setColorActive(color (103, 155, 153))
       ;
 
     fotografia= cp5.addBang("imagem")
@@ -23,14 +29,14 @@ class loadSaveXML
       .setSize(comprimentoTemp-10, alturaTemp-10)
       .setFont(fonte)
       .setLabel("imagem")
+      .setColorCaptionLabel(color (4,57,27))
+      .setColorForeground(color (65, 129, 127))
+      .setColorActive(color (103, 155, 153))
       ;
 
-    cp5.getController("abrir").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-    cp5.getController("abrir").getCaptionLabel().setFont(fonteP5).setSize(10);
-    cp5.getController("guardar").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-    cp5.getController("guardar").getCaptionLabel().setFont(fonteP5).setSize(10);
-    cp5.getController("imagem").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-    cp5.getController("imagem").getCaptionLabel().setFont(fonteP5).setSize(8);
+    cp5.getController("abrir").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER).setFont(fonteP5).setSize(11);
+    cp5.getController("guardar").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER).setFont(fonteP5).setSize(11);
+    cp5.getController("imagem").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER).setFont(fonteP5).setSize(9);
   }
 }
 

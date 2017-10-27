@@ -15,12 +15,13 @@ class MeuSliderEscolheThreshold
        .setRangeValues(300,400)
        // after the initialization we turn broadcast back on again
        .setBroadcast(true)
-       .setColorForeground(color(0,21,100))
-       .setColorBackground(color(255,40,100))  
+       .setColorCaptionLabel(color (4,57,27))
+       .setColorForeground(color (14,232,66))
+       .setColorBackground(color (125, 159, 53))
+       .setColorActive(color (54, 80, 0))
        ;
-       
-     //cp5.getController("rangeController"+indexTemp).getValueLabel().setFont(fonteP5).setSize(11);
-     cp5.getController("rangeController"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(10).setText("âmbito").setColor(255);
+
+     cp5.getController("rangeController"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(10).setText("âmbito");
      cp5.getController("rangeController"+indexTemp).getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
   }
 }
@@ -39,6 +40,10 @@ class MeuNumberMedicao
      .setValue((int) random(0,1023))
      .setDecimalPrecision (0)
      .setLock(true)
+     .setColorCaptionLabel(color (4,57,27))
+     .setColorForeground(color (14,232,66))
+     .setColorBackground(color (0,68,0))
+     .setColorActive(color (103, 155, 153))
      ;
      
      cp5.getController("numberboxValue"+tempIndex).getCaptionLabel().setFont(fonteP5).setSize(10).setText("");
@@ -90,21 +95,18 @@ class TocadorAutomatico
     alt=altTemp;
     
     caixaTemporizador= cp5.addTextfield("alarme"+indexTemp)
-      .setPosition(x+(comp*0.5)-1,y)
-      .setSize(round(comp*0.49),round(alt*0.5))
+      .setPosition(x+(comp*0.45)-1,y)
+      .setSize(round(comp*0.4),round(alt*0.45))
       .setFont(fonte)
       .setFocus(false)
       .setId(indexTemp)
       .setAutoClear(false)
+      .setColorCaptionLabel(0)
+      .setColorForeground(0)
+      .setColorBackground(color (213,239,159))
+      .setColorActive(color (103, 155, 153))
       ;
       
     cp5.getController("alarme"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(12).setText("alarme");
-  }
-  
-  void gui()
-  {
-    noStroke();
-    fill(40,20,20);
-    rect(x+(comp*0.49),y+(alt*0.5),comp*0.5,alt*0.5);
   }
 }

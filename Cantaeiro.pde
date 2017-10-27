@@ -2,10 +2,9 @@
 ABeeZee:
  Copyright (c) 2011 by Anja Meiners (www.carrois.com post@carrois.com), with Reserved Font Name ‘ABeeZee’
  This Font Software is licensed under the SIL Open Font License, Version 1.1.
+ 
+ Speaker image from (https://pixabay.com/pt/auto-falante-som-%C3%ADcone-volume-1042642/)
  */
-
-//cp5.getController("valor_"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(10).setText("desvio");
-//.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
 import controlP5.*;
 import java.util.*;
@@ -111,7 +110,7 @@ void setup()
   //sliders
   for (int j=0; j<numeroSlides; j++)
   {
-    valorMedido[j] = new MeuNumberMedicao (225, yInicioSliders+(j*espacamentoAlturaSliders), j);
+    valorMedido[j] = new MeuNumberMedicao (240, yInicioSliders+(j*espacamentoAlturaSliders), j);
     sliderThreshold[j] = new MeuSliderEscolheThreshold (330, yInicioSliders+(j*espacamentoAlturaSliders), j);
     thresholdBox[j] = new AssinalaThreshold (600, yInicioSliders+(j*espacamentoAlturaSliders), alturaSliders, j);
   }
@@ -121,7 +120,7 @@ void setup()
   for (int k=0; k<numeroPistas; k++)
   {
     ps[k]= new PistaSamples(15+(210*k), 170, 200, 70, k, numeroSampleBoxes, k*4);
-    alarme[k]= new TocadorAutomatico (180+(130*k), 649, 200, 40, k);
+    alarme[k]= new TocadorAutomatico (210+(100*k), 659, 200, 40, k);
     horaDefinida[k]=99;
     minutoDefinido[k]=99;
     somAlarmeTocou[k]=true;
@@ -181,7 +180,6 @@ void draw()
   for (int k=0; k<numeroPistas; k++)
   {
     ps[k].tocaPistaSample(mouseX, mouseY);
-    alarme[k].gui();
     ps[k].tocaSamplesQuandoThreshold(k);
   }
   
@@ -217,6 +215,7 @@ void horasSegundos()
   displayMinutos=str(minutos);
 
   textSize(26);
+  fill(0);
 
   if (minutos>=1 && minutos <10)
   {

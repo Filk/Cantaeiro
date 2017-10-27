@@ -14,6 +14,10 @@ class Plantitura
     .setFont(fonte)
     .setFocus(false)
     .setAutoClear(false)
+    .setColorCaptionLabel(color (4,57,27))
+    .setColorForeground(color (54,80,0))
+    .setColorBackground(color (0,68,0))
+    .setColorActive(color (14,232,66))
     ;
     cp5.getController("plantitura").getCaptionLabel().setFont(fonteP5).setSize(11).setColor(0);
     

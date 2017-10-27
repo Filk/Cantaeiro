@@ -73,6 +73,9 @@ class PistaSamples
      .setId(indexPista)
      .setFont(fonte)
      .setValue(0)
+     .setColorCaptionLabel(color (255,255,255))
+     .setColorBackground(color (87, 119, 20))
+     .setColorForeground(color (54, 80, 0))
      .setType(ScrollableList.DROPDOWN)
      .close()
      ;
@@ -85,13 +88,13 @@ class PistaSamples
       noStroke();
       ////open menu sample box
       fill(0,0,100);
-      rect(x,y+alturaOpen+(i*espacamentoEntreBlocos), comprimentoBloco, alturaOpen);
+      //rect(x,y+alturaOpen+(i*espacamentoEntreBlocos), comprimentoBloco, alturaOpen);
       textSize(12);
       fill(40,200,10);
       text(nomesSons.get(i+4*indexPista), x+5 ,y+alturaOpen+(i*espacamentoEntreBlocos)+13); 
       //sample box 
       fill(100,100,100);
-      rect(x,y+alturaOpen+((i*espacamentoEntreBlocos)+alturaOpen), comprimentoBloco, alturaBloco);
+      //rect(x,y+alturaOpen+((i*espacamentoEntreBlocos)+alturaOpen), comprimentoBloco, alturaBloco);
 
       if (tempA>=x && tempA<(x+comprimentoBloco) && tempB>=y+alturaOpen+(i*espacamentoEntreBlocos)+20 && tempB<(y+alturaBloco+alturaOpen+(i*espacamentoEntreBlocos)+20) && !sl.isOpen() && ratoClicado)
       {
@@ -141,6 +144,9 @@ class NovosSons
       .setSize(comprimentoTemp, alturaTemp)
       .setFont(fonte)
       .setLabel("novo som")
+      .setColorCaptionLabel(color (255,255,255))
+      .setColorForeground(color (0,98,0))
+      .setColorActive(color (103, 155, 153))
       ;
 
     cp5.getController("novoSom"+index).getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);

@@ -1,10 +1,21 @@
 /*
+Cant(a)eiro is an ongoing project that proposes to investigate the potential of congregating plants with 
+current computer technologies as a catalyst for musical creation with children within school environments.
+This software was developed to allow children and teachers to interact with the hardware! 
+It features the possibility to play sounds automatically or manually, to programm specific (musical) behaviours 
+and to write information about the plant with which it is interacting.
+With this research we will provide inspiring ideas to pump up musical creation in which 
+plants and children interact and are both actively contributing to the soundscape of its environment.
+
+Developed at Orquestra Jazz de Matosinhos and 
+CIPEM (Research Center in Psychology of Music and Music Education)
+
 ABeeZee:
- Copyright (c) 2011 by Anja Meiners (www.carrois.com post@carrois.com), with Reserved Font Name ‘ABeeZee’
- This Font Software is licensed under the SIL Open Font License, Version 1.1.
+Copyright (c) 2011 by Anja Meiners (www.carrois.com post@carrois.com), with Reserved Font Name ‘ABeeZee’
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
  
- Speaker image from (https://pixabay.com/pt/auto-falante-som-%C3%ADcone-volume-1042642/)
- */
+Speaker image from (https://pixabay.com/pt/auto-falante-som-%C3%ADcone-volume-1042642/)
+*/
 
 import controlP5.*;
 import java.util.*;

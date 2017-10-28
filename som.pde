@@ -87,14 +87,10 @@ class PistaSamples
     {
       noStroke();
       ////open menu sample box
-      fill(0,0,100);
-      //rect(x,y+alturaOpen+(i*espacamentoEntreBlocos), comprimentoBloco, alturaOpen);
       textSize(12);
       fill(40,200,10);
       text(nomesSons.get(i+4*indexPista), x+5 ,y+alturaOpen+(i*espacamentoEntreBlocos)+13); 
       //sample box 
-      fill(100,100,100);
-      //rect(x,y+alturaOpen+((i*espacamentoEntreBlocos)+alturaOpen), comprimentoBloco, alturaBloco);
 
       if (tempA>=x && tempA<(x+comprimentoBloco) && tempB>=y+alturaOpen+(i*espacamentoEntreBlocos)+20 && tempB<(y+alturaBloco+alturaOpen+(i*espacamentoEntreBlocos)+20) && !sl.isOpen() && ratoClicado)
       {

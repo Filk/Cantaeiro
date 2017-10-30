@@ -107,6 +107,6 @@ class TocadorAutomatico
       .setColorActive(color (103, 155, 153))
       ;
       
-    cp5.getController("alarme"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(12).setText("alarme");
+    cp5.getController("alarme"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(12).setText("alarme (ex: 13:20)");
   }
 }

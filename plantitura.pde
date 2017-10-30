@@ -19,7 +19,7 @@ class Plantitura
     .setColorBackground(color (0,68,0))
     .setColorActive(color (14,232,66))
     ;
-    cp5.getController("plantitura").getCaptionLabel().setFont(fonteP5).setSize(11).setColor(0);
+    cp5.getController("plantitura").getCaptionLabel().setFont(fonteP5).setSize(11).setColor(0).setText("plantitura (ex: 4,3,1,1,5,12,13,8,5,5,1)");
     
     playStop=false;
   }

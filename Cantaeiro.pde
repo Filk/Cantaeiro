@@ -131,7 +131,7 @@ void setup()
   for (int k=0; k<numeroPistas; k++)
   {
     ps[k]= new PistaSamples(15+(210*k), 170, 200, 70, k, numeroSampleBoxes, k*4);
-    alarme[k]= new TocadorAutomatico (210+(100*k), 659, 200, 40, k);
+    alarme[k]= new TocadorAutomatico (140+(140*k), 659, 270, 40, k);
     horaDefinida[k]=99;
     minutoDefinido[k]=99;
     somAlarmeTocou[k]=true;
@@ -146,7 +146,7 @@ void setup()
 
   plantitura= new Plantitura(15, 590, 580, 30);
 
-  lsXML= new loadSaveXML(120, 660, 60, 30);
+  lsXML= new loadSaveXML(100, 660, 60, 30);
   
   for (int l=0; l<nSons.length; l++)
   {

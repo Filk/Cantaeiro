@@ -187,6 +187,17 @@ void setup()
   ac.start();
 }
 
+//read values from Arduino inputs
+void atualizaMedicoes()
+{
+  for (int i=0; i<numeroSlides; i++)
+  {
+    valorMedido[i].nb.setValue(arduino.analogRead(i)+1);
+  }
+}
+
+
+
 void draw()
 {
   image(fundo, 0, 0);
@@ -408,13 +419,5 @@ public void controlEvent(ControlEvent theEvent)
       }
       assinalaXML=false;
    }
-  }
-}
-
-void atualizaMedicoes()
-{
-  for (int i=0; i<numeroSlides; i++)
-  {
-    valorMedido[i].nb.setValue(arduino.analogRead(i)+1);
   }
 }

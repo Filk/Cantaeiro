@@ -90,6 +90,9 @@ int indexNovoSom;
 
 boolean gravouBem=false;
 
+String arduinoSelection;
+int totalPortas, escolhaPorta;
+
 void setup()
 {
   size (1024, 700);
@@ -181,13 +184,15 @@ void setup()
   JOptionPane.showMessageDialog(frame, arduinoLista, "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
   
   //choose arduino port
-  String arduinoSelection = JOptionPane.showInputDialog (frame ,"", "Porta Arduino",JOptionPane.QUESTION_MESSAGE);
-  int x=Integer.parseInt(arduinoSelection);
+  arduinoSelection = JOptionPane.showInputDialog (frame ,"", "Porta Arduino",JOptionPane.QUESTION_MESSAGE);
   
-  // Modify this line, by changing the "0" to the index of the serial
-  // port corresponding to your Arduino board (as it appears in the list
-  // printed by the line above).
-  arduino = new Arduino(this, Arduino.list()[x], 57600);
+  escolhaPorta=Integer.parseInt(arduinoSelection);
+  totalPortas = arduinoLista.length;
+  
+  if (arduinoSelection!=null && escolhaPorta>=0 && escolhaPorta<arduinoLista.length)
+  {
+    arduino = new Arduino(this, Arduino.list()[escolhaPorta], 57600);
+  }
   
   ac.start();
 }
@@ -197,7 +202,7 @@ void atualizaMedicoes()
 {
   for (int i=0; i<numeroSlides; i++)
   {
-    valorMedido[i].nb.setValue(arduino.analogRead(i)+1);
+    valorMedido[i].nb.setValue((arduino.analogRead(i)+1)* (3.3/1023)*1000);
   }
 }
 
@@ -232,7 +237,10 @@ void draw()
     gravouBem=false;
   }
   
-  atualizaMedicoes();
+  if (arduinoSelection!=null && escolhaPorta>=0 && escolhaPorta<totalPortas)
+  {
+    atualizaMedicoes();
+  }
 }
 
 void mousePressed()

@@ -25,14 +25,16 @@ void setup()
     while(true);
   }
   
-  myDFPlayer.volume(25);  //Set volume value. From 0 to 30
+  myDFPlayer.volume(20);  //Set volume value. From 0 to 30
   myDFPlayer.pause();  //pause
 }
 
 void loop() 
 {
   int leituraCondutividade = analogRead(analogPinCondutividade);
+  Serial.println(leituraCondutividade);
   int leituraPotenciometro = analogRead(analogPinPotenciometro);
+  //Serial.println(leituraPotenciometro);
   threshold=leituraPotenciometro;
 
   if (leituraCondutividade<threshold && readyToPlay)

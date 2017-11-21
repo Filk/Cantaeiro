@@ -10,9 +10,8 @@ class MeuSliderEscolheThreshold
        .setPosition(xTemp,yTemp)
        .setSize(200,33)
        .setHandleSize(10)
-       .setDecimalPrecision(1)
-       .setRange(0,1023)
-       .setRangeValues(300,400)
+       .setRange(0,3300)
+       .setRangeValues(1000,1500)
        // after the initialization we turn broadcast back on again
        .setBroadcast(true)
        .setColorCaptionLabel(color (4,57,27))
@@ -34,11 +33,10 @@ class MeuNumberMedicao
   {
      nb= cp5.addNumberbox("numberboxValue"+tempIndex)
      .setPosition(tempX,tempY)
-     .setSize(70,33)
-     .setRange(0,1023)
-     .setMultiplier(1) // set the sensitifity of the numberbox
-     .setValue((int) random(0,1023))
-     .setDecimalPrecision (0)
+     .setSize(85,33)
+     .setRange(0,3300)
+     .setMultiplier(0.1) // set the sensitifity of the numberbox
+     .setValue((random(0,1023) * (3.3/1023))*1000)
      .setLock(true)
      .setColorCaptionLabel(color (4,57,27))
      .setColorForeground(color (14,232,66))

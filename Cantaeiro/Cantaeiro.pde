@@ -122,7 +122,7 @@ void setup()
   for (int j=0; j<numeroSlides; j++)
   {
     valorMedido[j] = new MeuNumberMedicao (240, yInicioSliders+(j*espacamentoAlturaSliders), j);
-    sliderThreshold[j] = new MeuSliderEscolheThreshold (330, yInicioSliders+(j*espacamentoAlturaSliders), j);
+    sliderThreshold[j] = new MeuSliderEscolheThreshold (345, yInicioSliders+(j*espacamentoAlturaSliders), j);
     thresholdBox[j] = new AssinalaThreshold (600, yInicioSliders+(j*espacamentoAlturaSliders), alturaSliders, j);
   }
 

@@ -98,7 +98,7 @@ void setup()
   //PImage titlebaricon=loadImage("icon_32x32.png");
   //surface.setTitle(titlebaricon);
   
-  surface.setTitle("Cant(a)eiro");
+  surface.setTitle("Cant(a)eiro with Arduino");
 
   fonte= createFont("ABeeZee-Regular.otf", 14, true);
   fonteP5= new ControlFont(fonte, 10);
@@ -125,7 +125,7 @@ void setup()
   for (int j=0; j<numeroSlides; j++)
   {
     valorMedido[j] = new MeuNumberMedicao (240, yInicioSliders+(j*espacamentoAlturaSliders), j);
-    sliderThreshold[j] = new MeuSliderEscolheThreshold (330, yInicioSliders+(j*espacamentoAlturaSliders), j);
+    sliderThreshold[j] = new MeuSliderEscolheThreshold (345, yInicioSliders+(j*espacamentoAlturaSliders), j);
     thresholdBox[j] = new AssinalaThreshold (600, yInicioSliders+(j*espacamentoAlturaSliders), alturaSliders, j);
   }
 
@@ -177,12 +177,17 @@ void setup()
   ficha.adicionalComentarios.setText("Histórias da minha planta...");
   
   // Prints out the available serial ports.
-  println(Arduino.list());
+  String [] arduinoLista = Arduino.list();  
+  JOptionPane.showMessageDialog(frame, arduinoLista, "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
+  
+  //choose arduino port
+  String arduinoSelection = JOptionPane.showInputDialog (frame ,"", "Porta Arduino",JOptionPane.QUESTION_MESSAGE);
+  int x=Integer.parseInt(arduinoSelection);
   
   // Modify this line, by changing the "0" to the index of the serial
   // port corresponding to your Arduino board (as it appears in the list
   // printed by the line above).
-  arduino = new Arduino(this, Arduino.list()[3], 57600);
+  arduino = new Arduino(this, Arduino.list()[x], 57600);
   
   ac.start();
 }
@@ -195,8 +200,6 @@ void atualizaMedicoes()
     valorMedido[i].nb.setValue(arduino.analogRead(i)+1);
   }
 }
-
-
 
 void draw()
 {

@@ -14,7 +14,7 @@ class FichaDescritiva
     descritores.append("Forma das folhas");
     descritores.append("Características");
     descritores.append("Nome Científico da Planta");
-    descritores.append("Histórias da minha planta...");
+    descritores.append("Notas sobre a minha planta...");
 
 
     for (int i=0; i<numeroDescritores; i++)

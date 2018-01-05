@@ -8,11 +8,10 @@ class MeuSliderEscolheThreshold
        // disable broadcasting since setRange and setRangeValues will trigger an event
        .setBroadcast(false) 
        .setPosition(xTemp,yTemp)
-       .setSize(200,33)
+       .setSize(245,33)
        .setHandleSize(10)
-       .setDecimalPrecision(1)
-       .setRange(0,1023)
-       .setRangeValues(300,400)
+       .setRange(0,3300)
+       .setRangeValues(1000,1500)
        // after the initialization we turn broadcast back on again
        .setBroadcast(true)
        .setColorCaptionLabel(color (4,57,27))
@@ -34,11 +33,9 @@ class MeuNumberMedicao
   {
      nb= cp5.addNumberbox("numberboxValue"+tempIndex)
      .setPosition(tempX,tempY)
-     .setSize(70,33)
-     .setRange(0,1023)
-     .setMultiplier(1) // set the sensitifity of the numberbox
-     .setValue((int) random(0,1023))
-     .setDecimalPrecision (0)
+     .setSize(85,33)
+     .setRange(0,3300)
+     .setMultiplier(0.1) // set the sensitifity of the numberbox
      .setLock(true)
      .setColorCaptionLabel(color (4,57,27))
      .setColorForeground(color (14,232,66))
@@ -105,6 +102,7 @@ class TocadorAutomatico
       .setColorForeground(0)
       .setColorBackground(color (213,239,159))
       .setColorActive(color (103, 155, 153))
+      .setColorValueLabel(0)
       ;
       
     cp5.getController("alarme"+indexTemp).getCaptionLabel().setFont(fonteP5).setSize(12).setText("alarme (ex: 13:20)");

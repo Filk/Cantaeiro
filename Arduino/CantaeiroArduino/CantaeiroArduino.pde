@@ -281,6 +281,12 @@ void draw()
   {
     atualizaMedicoes();
   }
+  
+  //link to help
+  if (mouseX>=717 && mouseX<=744 && mouseY>=660 && mouseY<=692 && ratoClicado)
+  {
+    link("http://www.filipelopes.net/Software/cantaeiro.html");
+  }
 }
 
 void mousePressed()

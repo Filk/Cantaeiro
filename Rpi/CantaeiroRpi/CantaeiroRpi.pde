@@ -17,6 +17,9 @@ This Font Software is licensed under the SIL Open Font License, Version 1.1.
 Speaker image from (https://pixabay.com/pt/auto-falante-som-%C3%ADcone-volume-1042642/)
 */
 
+// para activar o SPI primeiro correr um sketch em Python que use SPI!!! (incluído na pasta do projeto)
+import processing.io.*;
+SPI MCP;
 import controlP5.*;
 import java.util.*;
 import beads.*;
@@ -24,25 +27,32 @@ import org.jaudiolibs.beads.*;
 import javax.swing.*;
 import java.io.IOException;
 import javax.swing.ImageIcon;
+import processing.serial.*;
+import cc.arduino.*;
 
 AudioContext ac;
 ControlP5 cp5;
 PFont fonte;
 ControlFont fonteP5;
+Arduino arduino;
 
 int numeroSamples = 12;
 GereSamples [] tocaSamples = new GereSamples [numeroSamples];
+
+ArrayList<Sine> sinusoide = new ArrayList<Sine>();
 
 int numeroSlides=3;
 MeuSliderEscolheThreshold [] sliderThresholdEscolhido = new MeuSliderEscolheThreshold[numeroSlides];
 MeuNumberMedicao [] valorMedido = new MeuNumberMedicao[numeroSlides];
 AssinalaThreshold [] thresholdBox = new AssinalaThreshold [numeroSlides];
 MeuSliderEscolheThreshold [] sliderThreshold = new MeuSliderEscolheThreshold[numeroSlides];
+//added value for touch plant sensor
+MeuNumberMedicao valorMedidoToque;
 
 PImage fundo, play, stop, bonsai;
 
 //scrolabble list of sensors
-List listaSensores = Arrays.asList("Pausa", "condutividade", "luminosidade", "humidade");
+List listaSensores = Arrays.asList("sem sensor", "condutividade", "luminosidade", "humidade");
 int numeroSampleBoxes=4;
 StringList nomesSons;
 int numeroPistas=3;
@@ -57,11 +67,11 @@ int [] horaDefinida = new int [numeroPistas];
 int [] minutoDefinido = new int [numeroPistas];
 
 FichaDescritiva ficha;
-int xStartPosFicha=670;
-int yStartPosFicha=25;
-int comprimentoFicha=320;
-int alturaFicha=240;
-boolean areaSelecionada=false;
+int xStartPosFicha;
+int yStartPosFicha;
+int comprimentoFicha;
+int alturaFicha;
+boolean areaSelecionada;
 
 int posXClock;
 int posYClock;
@@ -87,6 +97,11 @@ int indexNovoSom;
 
 boolean gravouBem=false;
 
+String arduinoSelection;
+int totalPortas, escolhaPorta;
+
+Toqueplanta sinusoidePlanta;
+
 void setup()
 {
   size (1024, 700);
@@ -95,7 +110,7 @@ void setup()
   //PImage titlebaricon=loadImage("icon_32x32.png");
   //surface.setTitle(titlebaricon);
   
-  surface.setTitle("Cant(a)eiro");
+  surface.setTitle("Cant(a)eiro with Arduino");
 
   fonte= createFont("ABeeZee-Regular.otf", 14, true);
   fonteP5= new ControlFont(fonte, 10);
@@ -122,7 +137,7 @@ void setup()
   for (int j=0; j<numeroSlides; j++)
   {
     valorMedido[j] = new MeuNumberMedicao (240, yInicioSliders+(j*espacamentoAlturaSliders), j);
-    sliderThreshold[j] = new MeuSliderEscolheThreshold (330, yInicioSliders+(j*espacamentoAlturaSliders), j);
+    sliderThreshold[j] = new MeuSliderEscolheThreshold (345, yInicioSliders+(j*espacamentoAlturaSliders), j);
     thresholdBox[j] = new AssinalaThreshold (600, yInicioSliders+(j*espacamentoAlturaSliders), alturaSliders, j);
   }
 
@@ -137,8 +152,13 @@ void setup()
     somAlarmeTocou[k]=true;
     alarmeXML[k]=false;
   }
-
-  //xStartPos, yStartPos,comprimento, altura
+  
+  //dimensões ficha
+  xStartPosFicha=670;
+  yStartPosFicha=25;
+  comprimentoFicha=320;
+  alturaFicha=140;
+  areaSelecionada=false;
   ficha=new FichaDescritiva(xStartPosFicha, yStartPosFicha, comprimentoFicha, alturaFicha);
 
   posXClock=15;
@@ -148,19 +168,21 @@ void setup()
 
   lsXML= new loadSaveXML(100, 660, 60, 30);
   
+  int alturaPistasInicio=189;
+  
   for (int l=0; l<nSons.length; l++)
   {
     if(l<4)
     {
-      nSons[l]= new NovosSons (155,189+(l*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (155,alturaPistasInicio+(l*ps[0].espacamentoEntreBlocos),60,20,l);
     }
     if(l>=4&&l<8)
     {
-      nSons[l]= new NovosSons (368,189+((l-4)*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (368,alturaPistasInicio+((l-4)*ps[0].espacamentoEntreBlocos),60,20,l);
     }
     if(l>=8&&l<12)
     {
-      nSons[l]= new NovosSons (577,189+((l-8)*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (577,alturaPistasInicio+((l-8)*ps[0].espacamentoEntreBlocos),60,20,l);
     }
   }
   
@@ -171,9 +193,41 @@ void setup()
   ficha.entrada[3].setText("elipse");
   ficha.entrada[4].setText("planta de interior, meia luz, 12ºC, média água");
   ficha.entrada[5].setText("Clusia Rosea");
-  ficha.adicionalComentarios.setText("Histórias da minha planta...");
+  ficha.adicionalComentarios.setText("Notas sobre minha planta...");
+  
+  MCP = new SPI(SPI.list()[0]); // raspberry pi has 2 SPI interfaces, SPI.list()[1] is the other
+  MCP.settings(1000000, SPI.MSBFIRST, SPI.MODE0); // 1MHz should be OK...
+  
+  
+  //added box value for touch plant sensor
+  valorMedidoToque = new MeuNumberMedicao (660, 535, 3);
+  sinusoidePlanta = new Toqueplanta (762, 535, 33);
   
   ac.start();
+}
+
+//read values from Arduino inputs
+void atualizaMedicoes()
+{
+  for (int i=0; i<numeroSlides; i++)
+  {
+    valorMedido[i].nb.setValue((returnADC(i)+1)* (3.3/1023)*1000);
+  }
+  
+  //added value for touch plant sensor
+  valorMedidoToque.nb.setValue((returnADC(3)+1)* (3.3/1023)*1000);
+}
+
+//read values from RPi inputs
+int returnADC(int ch) 
+{
+  byte[] out = {1, byte((8 + ch) << 4), 0}; // outgoing bytes to the MCP
+  byte[] in = MCP.transfer(out); // sends & returns
+  int highInt = in[1] & 0xFF; // processing sees bytes as signed (-128 to 127) which is not what we want here
+  int lowInt = in[2] & 0xFF; // doing this converts to unsigned ints (0 to 255)
+  int result = ((highInt & 3) << 8) + lowInt; // adds lowest 2 bits of 2nd byte to 3rd byte to get 10 bit result 
+  //println (result);
+  return result;
 }
 
 void draw()
@@ -206,11 +260,31 @@ void draw()
     JOptionPane.showMessageDialog(frame, "Cant(a)eiro guardado!", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
     gravouBem=false;
   }
+  
+  sinusoidePlanta.toque();
+  
+  if (sinusoide.size()>0)
+  {
+    for (int i=0; i<sinusoide.size(); i++)
+    {
+      sinusoide.get(i).gSinusoide.setGain(sinusoide.get(i).envolvente());
+      sinusoide.get(i).killStuff(i);
+    }
+  }
+  
+  atualizaMedicoes();
+  
+  //link to help
+  if (mouseX>=717 && mouseX<=744 && mouseY>=660 && mouseY<=692 && ratoClicado)
+  {
+    link("http://www.filipelopes.net/Software/cantaeiro.html");
+  }
 }
 
 void mousePressed()
 {
   ratoClicado=true;
+  //sinusoide.add(new Sine());
 }
 
 void mouseReleased()
@@ -395,5 +469,11 @@ public void controlEvent(ControlEvent theEvent)
       }
       assinalaXML=false;
    }
+  }
+  
+    //touch stuff
+  if (theEvent.getName().equals("sliderToquePlanta")) 
+  {
+   
   }
 }

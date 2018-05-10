@@ -27,14 +27,11 @@ import org.jaudiolibs.beads.*;
 import javax.swing.*;
 import java.io.IOException;
 import javax.swing.ImageIcon;
-import processing.serial.*;
-import cc.arduino.*;
 
 AudioContext ac;
 ControlP5 cp5;
 PFont fonte;
 ControlFont fonteP5;
-Arduino arduino;
 
 int numeroSamples = 12;
 GereSamples [] tocaSamples = new GereSamples [numeroSamples];
@@ -110,7 +107,7 @@ void setup()
   //PImage titlebaricon=loadImage("icon_32x32.png");
   //surface.setTitle(titlebaricon);
   
-  surface.setTitle("Cant(a)eiro with Arduino");
+  surface.setTitle("Cant(a)eiro for RPi");
 
   fonte= createFont("ABeeZee-Regular.otf", 14, true);
   fonteP5= new ControlFont(fonte, 10);
@@ -195,6 +192,7 @@ void setup()
   ficha.entrada[5].setText("Clusia Rosea");
   ficha.adicionalComentarios.setText("Notas sobre minha planta...");
   
+  //printArray(SPI.list());
   MCP = new SPI(SPI.list()[0]); // raspberry pi has 2 SPI interfaces, SPI.list()[1] is the other
   MCP.settings(1000000, SPI.MSBFIRST, SPI.MODE0); // 1MHz should be OK...
   

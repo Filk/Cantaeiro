@@ -1,33 +1,44 @@
+import java.util.*;
 import beads.*;
 import org.jaudiolibs.beads.*;
-import java.util.Arrays; 
+import javax.swing.*;
+import java.io.IOException;
+import javax.swing.ImageIcon;
+import processing.serial.*;
+import cc.arduino.*;
 
 AudioContext ac;
 
 int numeroDeDivisoes=3;
 
-//experimentar com acordes no piano
+PImage fundo, logos, cant;
 
 int [] Ythreshold = new int [numeroDeDivisoes];
 float [] ellipseX = new float [numeroDeDivisoes];
 int [] ellipseY = new int [numeroDeDivisoes];
 int tamanhoCirculo=10;
 int [] pontoMedioX = new int [numeroDeDivisoes];
-float [] transposicoesUp = new float [6];
-float [] transposicoesDown = new float [6];
-float [] transposicoes;
 int numeroAcordes=4;
 int numeroSamples=numeroAcordes+2;
 
 GereSamples [] tocaSamples = new GereSamples [numeroSamples];
+
+Arduino arduino;
+String arduinoSelection;
+int totalPortas, escolhaPorta;
+float [] valorMedido = new float [numeroDeDivisoes];
 
 void setup() 
 {
   // put setup code here
   size(640, 480);
   ac = new AudioContext();
-  background(120, 200, 110);
   smooth();
+  surface.setTitle("Cant(a)eiro simples");
+  
+  fundo= loadImage("fundo.png");
+  logos= loadImage("logos.png");
+  cant= loadImage("icon_32x32.png");
 
   for (int i=1; i<=numeroDeDivisoes; i++)
   {
@@ -42,29 +53,38 @@ void setup()
     tocaSamples[j]=new GereSamples (j+".aif");
   }
   
-  //up pentatonic
-  transposicoesUp[0]= 1;
-  transposicoesUp[1]= 0.083*2;
-  transposicoesUp[2]= 0.083*4;
-  transposicoesUp[3]= 0.083*7;
-  transposicoesUp[4]= 0.083*9;
-  transposicoesUp[5]= 2;
+  // Prints out the available serial ports.
+  String [] arduinoLista = Arduino.list();  
+  JOptionPane.showMessageDialog(frame, arduinoLista, "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(loadBytes("data/icon_32x32.png")));
   
-  //down pentatonic
-  transposicoesDown[0]= (0.045*(0))+0.5;
-  transposicoesDown[1]= (0.045*(2))+0.5;
-  transposicoesDown[2]= (0.045*(4))+0.5;
-  transposicoesDown[3]= (0.045*(7))+0.5;
-  transposicoesDown[4]= (0.045*(9))+0.5;
-  transposicoesDown[5]= 1;
-
-  transposicoes = concat(transposicoesDown, transposicoesUp);
+  //choose arduino port
+  arduinoSelection = JOptionPane.showInputDialog (frame ,"", "Porta Arduino",JOptionPane.QUESTION_MESSAGE);
+  
+  try
+  {
+    if (arduinoSelection!=null || arduinoSelection!="")
+    {
+      escolhaPorta=Integer.parseInt(arduinoSelection);
+      totalPortas = arduinoLista.length;
+    }
+    if (arduinoSelection!=null && escolhaPorta>=0 && escolhaPorta<arduinoLista.length)
+    {
+      arduino = new Arduino(this, Arduino.list()[escolhaPorta], 57600);
+    }
+  }
+  catch(Exception e)
+  {
+    e.printStackTrace();
+  }
+  
   ac.start();
 }
 
 void draw() 
 {
-  background(120, 200, 110);
+  image(fundo, 0, 0);
+  image(logos,0,height*0.91);
+  image(cant,width-50,height*0.915);
   barras();
   
   //bolas sensores
@@ -147,4 +167,13 @@ void barras()
   //barra dividir zona dos volumes
   strokeWeight(5);
   line(0, height*0.9, width, height*0.9);
+}
+
+//read values from Arduino inputs
+void atualizaMedicoes()
+{
+  for (int i=0; i<numeroDeDivisoes; i++)
+  {
+    valorMedido[i]=(arduino.analogRead(i))* (3.3/1023)*1000;
+  }
 }

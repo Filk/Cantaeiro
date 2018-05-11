@@ -18,9 +18,6 @@ class GereSamples
     ac.out.addInput(gainObject);
     player.setSample(meuSample);
     player.setKillOnEnd(false);
-    
-    
-    
     duracaoFile=meuSample.getLength();
     sampleChegouFim=false;
     novoSom=false;

@@ -86,6 +86,7 @@ void draw()
   image(logos,0,height*0.91);
   image(cant,width-50,height*0.915);
   barras();
+  atualizaMedicoes();
   
   //bolas sensores
   for (int i=0; i<numeroDeDivisoes; i++)
@@ -152,6 +153,8 @@ void draw()
     }
 
     noStroke();
+    
+    //colocar aqui valores lido do arduino
     ellipse(ellipseX[i], ellipseY[i], tamanhoCirculo, tamanhoCirculo);
   }
 }
@@ -174,6 +177,21 @@ void atualizaMedicoes()
 {
   for (int i=0; i<numeroDeDivisoes; i++)
   {
-    valorMedido[i]=(arduino.analogRead(i))* (3.3/1023)*1000;
+    valorMedido[i]=map(arduino.analogRead(i), 1, 1023, 10, (height*0.9));
+    //mapear valores lidos no arduino para o movimento no canvas;
+    //exagerar movimento de acordo com cada sensor
+    if (i==0)
+    {
+      ellipseY[i]=(int) valorMedido[i]*1;
+    }
+    if (i==1)
+    {
+      ellipseY[i]=(int) valorMedido[i]*2;
+    }
+    if (i==2)
+    {
+      ellipseY[i]=(int) valorMedido[i];
+    }
   }
+  println(valorMedido[1]);
 }

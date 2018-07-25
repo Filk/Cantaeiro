@@ -14,8 +14,7 @@ class FichaDescritiva
     descritores.append("Forma das folhas");
     descritores.append("Características");
     descritores.append("Nome Científico da Planta");
-    descritores.append("Notas sobre a minha planta...");
-
+    descritores.append("Histórias da minha planta...");
 
     for (int i=0; i<numeroDescritores; i++)
     {
@@ -70,13 +69,16 @@ void keyPressed()
       {
         ficha.infoEspaco = ficha.infoEspaco.substring(0, ficha.infoEspaco.length()-1);
       }
-    } else if (keyCode == DELETE && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
+    } 
+    else if (keyCode == DELETE && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
     {
       ficha.infoEspaco = "";
-    } else if (keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
+    } 
+    else if (keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT && keyCode!=131 && keyCode!=128 && keyCode!=129 && keyCode!=130)
     {
       ficha.infoEspaco= ficha.infoEspaco+key;
-    } else if (keyCode==131)
+    } 
+    else if (keyCode==131)
     {
       if (keyCode==65)
       {

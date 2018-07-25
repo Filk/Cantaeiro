@@ -28,6 +28,8 @@ String arduinoSelection;
 int totalPortas, escolhaPorta;
 float [] valorMedido = new float [numeroDeDivisoes];
 
+boolean noArduino=true;
+
 void setup() 
 {
   // put setup code here
@@ -62,7 +64,7 @@ void setup()
   
   try
   {
-    if (arduinoSelection!=null || arduinoSelection!="")
+    if (arduinoSelection!="" || arduinoSelection!="")
     {
       escolhaPorta=Integer.parseInt(arduinoSelection);
       totalPortas = arduinoLista.length;
@@ -70,6 +72,11 @@ void setup()
     if (arduinoSelection!=null && escolhaPorta>=0 && escolhaPorta<arduinoLista.length)
     {
       arduino = new Arduino(this, Arduino.list()[escolhaPorta], 57600);
+      noArduino=false;
+    }
+    else
+    {
+      noArduino=true;
     }
   }
   catch(Exception e)
@@ -177,20 +184,23 @@ void atualizaMedicoes()
 {
   for (int i=0; i<numeroDeDivisoes; i++)
   {
-    valorMedido[i]=map(arduino.analogRead(i), 1, 1023, 10, (height*0.9));
-    //mapear valores lidos no arduino para o movimento no canvas;
-    //exagerar movimento de acordo com cada sensor
-    if (i==0)
+    if(!noArduino)
     {
-      ellipseY[i]=(int) valorMedido[i]*1;
-    }
-    if (i==1)
-    {
-      ellipseY[i]=(int) valorMedido[i]*2;
-    }
-    if (i==2)
-    {
-      ellipseY[i]=(int) valorMedido[i];
+      valorMedido[i]=map(arduino.analogRead(i), 1, 1023, 10, (height*0.9));
+      //mapear valores lidos no arduino para o movimento no canvas;
+      //exagerar movimento de acordo com cada sensor
+      if (i==0)
+      {
+        ellipseY[i]=(int) valorMedido[i]*1;
+      }
+      if (i==1)
+      {
+        ellipseY[i]=(int) valorMedido[i]*2;
+      }
+      if (i==2)
+      {
+        ellipseY[i]=(int) valorMedido[i];
+      }
     }
   }
   println(valorMedido[1]);

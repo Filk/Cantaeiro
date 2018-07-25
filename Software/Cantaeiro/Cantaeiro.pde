@@ -6,10 +6,8 @@ It features the possibility to play sounds automatically or manually, to program
 and to write information about the plant with which it is interacting.
 With this research we will provide inspiring ideas to pump up musical creation in which 
 plants and children interact and are both actively contributing to the soundscape of its environment.
-
 Developed at Orquestra Jazz de Matosinhos and 
 CIPEM (Research Center in Psychology of Music and Music Education)
-
 ABeeZee:
 Copyright (c) 2011 by Anja Meiners (www.carrois.com post@carrois.com), with Reserved Font Name ‘ABeeZee’
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
@@ -36,20 +34,16 @@ Arduino arduino;
 int numeroSamples = 12;
 GereSamples [] tocaSamples = new GereSamples [numeroSamples];
 
-ArrayList<Sine> sinusoide = new ArrayList<Sine>();
-
 int numeroSlides=3;
 MeuSliderEscolheThreshold [] sliderThresholdEscolhido = new MeuSliderEscolheThreshold[numeroSlides];
 MeuNumberMedicao [] valorMedido = new MeuNumberMedicao[numeroSlides];
 AssinalaThreshold [] thresholdBox = new AssinalaThreshold [numeroSlides];
 MeuSliderEscolheThreshold [] sliderThreshold = new MeuSliderEscolheThreshold[numeroSlides];
-//added value for touch plant sensor
-MeuNumberMedicao valorMedidoToque;
 
 PImage fundo, play, stop, bonsai;
 
 //scrolabble list of sensors
-List listaSensores = Arrays.asList("sem sensor", "condutividade", "luminosidade", "humidade");
+List listaSensores = Arrays.asList("Pausa", "condutividade", "luminosidade", "humidade");
 int numeroSampleBoxes=4;
 StringList nomesSons;
 int numeroPistas=3;
@@ -64,11 +58,11 @@ int [] horaDefinida = new int [numeroPistas];
 int [] minutoDefinido = new int [numeroPistas];
 
 FichaDescritiva ficha;
-int xStartPosFicha;
-int yStartPosFicha;
-int comprimentoFicha;
-int alturaFicha;
-boolean areaSelecionada;
+int xStartPosFicha=670;
+int yStartPosFicha=25;
+int comprimentoFicha=320;
+int alturaFicha=240;
+boolean areaSelecionada=false;
 
 int posXClock;
 int posYClock;
@@ -97,7 +91,7 @@ boolean gravouBem=false;
 String arduinoSelection;
 int totalPortas, escolhaPorta;
 
-Toqueplanta sinusoidePlanta;
+boolean noArduino=true;
 
 void setup()
 {
@@ -149,13 +143,8 @@ void setup()
     somAlarmeTocou[k]=true;
     alarmeXML[k]=false;
   }
-  
-  //dimensões ficha
-  xStartPosFicha=670;
-  yStartPosFicha=25;
-  comprimentoFicha=320;
-  alturaFicha=140;
-  areaSelecionada=false;
+
+  //xStartPos, yStartPos,comprimento, altura
   ficha=new FichaDescritiva(xStartPosFicha, yStartPosFicha, comprimentoFicha, alturaFicha);
 
   posXClock=15;
@@ -165,21 +154,19 @@ void setup()
 
   lsXML= new loadSaveXML(100, 660, 60, 30);
   
-  int alturaPistasInicio=189;
-  
   for (int l=0; l<nSons.length; l++)
   {
     if(l<4)
     {
-      nSons[l]= new NovosSons (155,alturaPistasInicio+(l*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (155,189+(l*ps[0].espacamentoEntreBlocos),60,20,l);
     }
     if(l>=4&&l<8)
     {
-      nSons[l]= new NovosSons (368,alturaPistasInicio+((l-4)*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (368,189+((l-4)*ps[0].espacamentoEntreBlocos),60,20,l);
     }
     if(l>=8&&l<12)
     {
-      nSons[l]= new NovosSons (577,alturaPistasInicio+((l-8)*ps[0].espacamentoEntreBlocos),60,20,l);
+      nSons[l]= new NovosSons (577,189+((l-8)*ps[0].espacamentoEntreBlocos),60,20,l);
     }
   }
   
@@ -190,7 +177,7 @@ void setup()
   ficha.entrada[3].setText("elipse");
   ficha.entrada[4].setText("planta de interior, meia luz, 12ºC, média água");
   ficha.entrada[5].setText("Clusia Rosea");
-  ficha.adicionalComentarios.setText("Notas sobre minha planta...");
+  ficha.adicionalComentarios.setText("Histórias da minha planta...");
   
   // Prints out the available serial ports.
   String [] arduinoLista = Arduino.list();  
@@ -199,26 +186,28 @@ void setup()
   //choose arduino port
   arduinoSelection = JOptionPane.showInputDialog (frame ,"", "Porta Arduino",JOptionPane.QUESTION_MESSAGE);
   
+  println(arduinoSelection);
+
   try
   {
-    if (arduinoSelection!=null || arduinoSelection!="")
-    {
-      escolhaPorta=Integer.parseInt(arduinoSelection);
-      totalPortas = arduinoLista.length;
-    }
-    if (arduinoSelection!=null && escolhaPorta>=0 && escolhaPorta<arduinoLista.length)
+    escolhaPorta=Integer.parseInt(arduinoSelection);
+    totalPortas = arduinoLista.length;
+    
+    if (arduinoSelection!="" && escolhaPorta>=0 && escolhaPorta<arduinoLista.length)
     {
       arduino = new Arduino(this, Arduino.list()[escolhaPorta], 57600);
+      noArduino=false;
+    }
+    else
+    {
+      noArduino=true;
     }
   }
+  
   catch(Exception e)
   {
     e.printStackTrace();
   }
-  
-  //added box value for touch plant sensor
-  valorMedidoToque = new MeuNumberMedicao (660, 535, 3);
-  sinusoidePlanta = new Toqueplanta (762, 535, 33);
   
   ac.start();
 }
@@ -228,11 +217,11 @@ void atualizaMedicoes()
 {
   for (int i=0; i<numeroSlides; i++)
   {
+    if (!noArduino)
+    {
     valorMedido[i].nb.setValue((arduino.analogRead(i)+1)* (3.3/1023)*1000);
+    }
   }
-  
-  //added value for touch plant sensor
-  valorMedidoToque.nb.setValue((arduino.analogRead(3)+1)* (3.3/1023)*1000);
 }
 
 void draw()
@@ -266,33 +255,15 @@ void draw()
     gravouBem=false;
   }
   
-  sinusoidePlanta.toque();
-  
-  if (sinusoide.size()>0)
-  {
-    for (int i=0; i<sinusoide.size(); i++)
-    {
-      sinusoide.get(i).gSinusoide.setGain(sinusoide.get(i).envolvente());
-      sinusoide.get(i).killStuff(i);
-    }
-  }
-  
   if (arduinoSelection!=null && escolhaPorta>=0 && escolhaPorta<totalPortas)
   {
     atualizaMedicoes();
-  }
-  
-  //link to help
-  if (mouseX>=717 && mouseX<=744 && mouseY>=660 && mouseY<=692 && ratoClicado)
-  {
-    link("http://www.filipelopes.net/Software/cantaeiro.html");
   }
 }
 
 void mousePressed()
 {
   ratoClicado=true;
-  //sinusoide.add(new Sine());
 }
 
 void mouseReleased()
@@ -477,11 +448,5 @@ public void controlEvent(ControlEvent theEvent)
       }
       assinalaXML=false;
    }
-  }
-  
-    //touch stuff
-  if (theEvent.getName().equals("sliderToquePlanta")) 
-  {
-   
   }
 }

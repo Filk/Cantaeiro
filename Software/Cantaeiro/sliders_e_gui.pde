@@ -8,7 +8,7 @@ class MeuSliderEscolheThreshold
        // disable broadcasting since setRange and setRangeValues will trigger an event
        .setBroadcast(false) 
        .setPosition(xTemp,yTemp)
-       .setSize(245,33)
+       .setSize(200,33)
        .setHandleSize(10)
        .setRange(0,3300)
        .setRangeValues(1000,1500)
@@ -36,6 +36,7 @@ class MeuNumberMedicao
      .setSize(85,33)
      .setRange(0,3300)
      .setMultiplier(0.1) // set the sensitifity of the numberbox
+     .setValue((random(0,1023) * (3.3/1023))*1000)
      .setLock(true)
      .setColorCaptionLabel(color (4,57,27))
      .setColorForeground(color (14,232,66))
